@@ -76,10 +76,10 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/process-list': {
+    '/req/core/process-list-op': {
       given: '$.paths',
       message: 'The server SHALL support the HTTP GET operation at the path `/processes`.',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-list',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-list-op',
       severity: 'error',
       then: {
         field: '/processes.get',
@@ -138,9 +138,9 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/process-description': {
+    '/req/core/process-description-op': {
       given: '$.paths',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-description',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-description-op',
       message: 'The server SHALL support the HTTP GET operation at the path `/processes/{processID}`.',
       severity: 'error',
       then: {
@@ -150,9 +150,9 @@ const processesCore: RulesetDefinition = {
         },
       },
     },
-    '/req/core/process-description#get': {
+    '/req/core/process-description-op#get': {
       given: '$.paths[?(@property.match(/^\\/processes\\/[^/]+$/))]',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-description',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-description-op',
       message: 'The server SHALL support the HTTP GET operation at the path `/processes/{processID}`.',
       severity: 'error',
       then: {

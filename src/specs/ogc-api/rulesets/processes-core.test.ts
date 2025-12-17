@@ -64,13 +64,13 @@ describe('/req/core/conformance-success', () => {
   });
 });
 
-describe('/req/core/process-list', () => {
+describe('/req/core/process-list-op', () => {
   test('Fails when processes path is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths as Record<string, unknown>)['/processes'];
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/process-list', 1);
+    expect(violations).toContainViolation('/req/core/process-list-op', 1);
   });
 });
 
@@ -110,13 +110,13 @@ describe('/req/core/process-list-success', () => {
   });
 });
 
-describe('/req/core/process-description', () => {
+describe('/req/core/process-description-op', () => {
   test('Fails when process description path is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths as Record<string, unknown>)['/processes/{processID}'];
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/process-description', 1);
+    expect(violations).toContainViolation('/req/core/process-description-op', 1);
   });
 
   test('Fails when process description GET operation is absent', async () => {
@@ -124,7 +124,7 @@ describe('/req/core/process-description', () => {
     delete (oasDoc.paths['/processes/{processID}'] as Record<string, unknown>).get;
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/process-description#get', 1);
+    expect(violations).toContainViolation('/req/core/process-description-op#get', 1);
   });
 });
 
