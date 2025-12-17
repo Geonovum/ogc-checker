@@ -234,6 +234,48 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
+    '/req/core/process-execute-sync-one': {
+      given: '$.paths[?(@property.match(/^\\/processes\\/[^/]+\\/execution$/))].post.responses',
+      message: 'A successful synchronous execution SHALL be reported with HTTP status code `200`.',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-execute-sync-one',
+      severity: 'error',
+      then: {
+        field: '200',
+        function: truthy,
+      },
+    },
+    '/req/core/process-execute-sync-many-json': {
+      given: '$.paths[?(@property.match(/^\\/processes\\/[^/]+\\/execution$/))].post.responses',
+      message: 'For multiple outputs, the response SHALL be a JSON document based on the `results.yaml` schema. {{error}}',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-execute-sync-many-json',
+      severity: 'error',
+      then: {
+        field: '200',
+        function: hasSchemaMatch,
+        functionOptions: {
+          schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/results.yaml`,
+        },
+      },
+    },
+    '/req/core/process-execute-success-async': {
+      given: '$.paths[?(@property.match(/^\\/processes\\/[^/]+\\/execution$/))].post.responses',
+      message: 'A successful asynchronous execution SHALL be reported with HTTP status code `201`. {{error}}',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-execute-success-async',
+      severity: 'error',
+      then: [
+        {
+          field: '201',
+          function: truthy,
+        },
+        {
+          field: '201',
+          function: hasSchemaMatch,
+          functionOptions: {
+            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/statusInfo.yaml`,
+          },
+        },
+      ],
+    },
   },
 };
 

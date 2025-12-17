@@ -217,3 +217,57 @@ describe('/req/core/process-execute-request', () => {
     expect(violations).toContainViolation('/req/core/process-execute-request', 1);
   });
 });
+
+describe('/req/core/process-execute-sync-one', () => {
+  test('Fails when 200 response is absent', async () => {
+    const oasDoc = clone(exampleDoc);
+    delete (oasDoc.paths['/processes/{processID}/execution'].post.responses as Record<string, unknown>)['200'];
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/process-execute-sync-one', 1);
+  });
+});
+
+describe('/req/core/process-execute-sync-many-json', () => {
+  test('Fails when 200 response schema is missing', async () => {
+    const oasDoc = clone(exampleDoc);
+
+    (oasDoc.paths['/processes/{processID}/execution'].post.responses as Record<string, unknown>)['200'] = {
+      description: 'OK',
+      content: {
+        [APPLICATION_JSON_TYPE]: {},
+      },
+    };
+
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/process-execute-sync-many-json', 1);
+  });
+});
+
+describe('/req/core/process-execute-success-async', () => {
+  test('Fails when 201 response is absent', async () => {
+    const oasDoc = clone(exampleDoc);
+    delete (oasDoc.paths['/processes/{processID}/execution'].post.responses as Record<string, unknown>)['201'];
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/process-execute-success-async', 1);
+  });
+
+  test('Fails when 201 response schema is invalid', async () => {
+    const oasDoc = clone(exampleDoc);
+
+    (oasDoc.paths['/processes/{processID}/execution'].post.responses as Record<string, unknown>)['201'] = {
+      description: 'Created',
+      content: {
+        [APPLICATION_JSON_TYPE]: {
+          schema: { type: 'string' },
+        },
+      },
+    };
+
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/process-execute-success-async', 1);
+  });
+});

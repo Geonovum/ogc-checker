@@ -118,6 +118,9 @@
           "200": {
             "$ref": "#/components/responses/ExecuteSync"
           },
+          "201": {
+            "$ref": "#/components/responses/ExecuteAsync"
+          },
           "404": {
             "$ref": "#/components/responses/NotFound"
           }
@@ -1327,6 +1330,31 @@
           }
         ]
       },
+      "results": {
+        "type": "object",
+        "additionalProperties": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        }
+      },
       "statusInfo": {
         "allOf": [
           {
@@ -1734,7 +1762,26 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "$ref": "#/components/schemas/results"
+            }
+          }
+        }
+      },
+      "ExecuteAsync": {
+        "description": "Result of asynchronous execution",
+        "headers": {
+          "Location": {
+            "description": "URL to the job",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/statusInfo"
             }
           }
         }
