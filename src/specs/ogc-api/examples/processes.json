@@ -198,6 +198,9 @@
             "$ref": "#/components/parameters/jobID"
           },
           {
+            "$ref": "#/components/parameters/outputs"
+          },
+          {
             "in": "header",
             "description": "Indicates client preferences, such as whether the client wishes a self-contained or minimal response.\nA `return=minimal` preference indicates that the client would prefer that links be returned to larger object to minimize the response payload.\nA `return=representation` indicates that the client would prefer if the server can return a self-contained response.",
             "name": "Prefer",
@@ -209,6 +212,35 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/JobResults"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidParameter"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/jobs/{jobID}/results/{outputID}": {
+      "get": {
+        "summary": "retrieve a single result of a job",
+        "description": "Retrieves a single output of a job.",
+        "operationId": "getResultOutput",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/jobID"
+          },
+          {
+            "$ref": "#/components/parameters/outputID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/JobResult"
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
@@ -1330,31 +1362,6 @@
           }
         ]
       },
-      "results": {
-        "type": "object",
-        "additionalProperties": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "integer"
-            },
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "array"
-            },
-            {
-              "type": "object"
-            }
-          ]
-        }
-      },
       "statusInfo": {
         "allOf": [
           {
@@ -1362,7 +1369,7 @@
           },
           {
             "type": "object",
-            "required": ["id", "status", "processingEntityType"],
+            "required": ["id", "status", "type"],
             "properties": {
               "id": {
                 "type": "string"
@@ -1371,9 +1378,9 @@
                 "type": "string",
                 "format": "uri"
               },
-              "processingEntityType": {
+              "type": {
                 "type": "string",
-                "example": ["ogc-api-processes", "openeo"]
+                "example": ["process", "wps", "openeo"]
               },
               "request": {
                 "oneOf": [
@@ -1499,6 +1506,20 @@
         "required": true,
         "schema": {
           "type": "string"
+        }
+      },
+      "outputs": {
+        "name": "outputs",
+        "in": "query",
+        "description": "comma-separated list of output identifiers to include in the response",
+        "required": false,
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "processID-query": {
@@ -1812,6 +1833,16 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/results"
+            }
+          }
+        }
+      },
+      "JobResult": {
+        "description": "A single processing result of a job.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
             }
           }
         }
