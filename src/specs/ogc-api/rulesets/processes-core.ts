@@ -11,7 +11,7 @@ export const OGC_API_PROCESSES_CORE_URI = 'http://www.opengis.net/spec/ogcapi-pr
 
 export const OGC_API_PROCESSES_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/18-062r3.html#/req_core_';
 
-const GIT_COMMIT_OR_TAG = '6a4656d90ecad5c349cf984e920f9048fef76190';
+export const SCHEMAS_URI_PREFIX = 'https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/master/openapi/schemas/';
 
 const processesCore: RulesetDefinition = {
   documentationUrl: 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/req/core',
@@ -42,7 +42,7 @@ const processesCore: RulesetDefinition = {
           field: '200',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/landingPage.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/landingPage.yaml',
           },
         },
       ],
@@ -71,7 +71,7 @@ const processesCore: RulesetDefinition = {
           field: '200',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/confClasses.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/confClasses.yaml',
           },
         },
       ],
@@ -133,7 +133,7 @@ const processesCore: RulesetDefinition = {
           field: '200',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/processList.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/processList.yaml',
           },
         },
       ],
@@ -184,7 +184,7 @@ const processesCore: RulesetDefinition = {
           field: '404',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -225,7 +225,7 @@ const processesCore: RulesetDefinition = {
           field: 'requestBody',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/execute.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/execute.yaml',
           },
         },
         {
@@ -253,7 +253,7 @@ const processesCore: RulesetDefinition = {
         field: '200',
         function: hasSchemaMatch,
         functionOptions: {
-          schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/results.yaml`,
+          schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/results.yaml',
         },
       },
     },
@@ -271,7 +271,7 @@ const processesCore: RulesetDefinition = {
           field: '201',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/statusInfo.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/statusInfo.yaml',
           },
         },
       ],
@@ -312,7 +312,7 @@ const processesCore: RulesetDefinition = {
           field: '200',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/statusInfo.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/statusInfo.yaml',
           },
         },
       ],
@@ -331,7 +331,7 @@ const processesCore: RulesetDefinition = {
           field: '404',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -359,7 +359,7 @@ const processesCore: RulesetDefinition = {
       },
     },
     '/req/core/job-results-param-outputs': {
-      given: "$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get",
+      given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get',
       message: 'The operation SHALL support a parameter `outputs`. {{error}}',
       documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-param-outputs',
       severity: 'error',
@@ -428,7 +428,7 @@ const processesCore: RulesetDefinition = {
           field: '200',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/processes-core/results.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'processes-core/results.yaml',
           },
         },
       ],
@@ -447,7 +447,7 @@ const processesCore: RulesetDefinition = {
           field: '400',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -466,7 +466,7 @@ const processesCore: RulesetDefinition = {
           field: '404',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -485,7 +485,7 @@ const processesCore: RulesetDefinition = {
           field: '404',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -504,7 +504,7 @@ const processesCore: RulesetDefinition = {
           field: '404',
           function: hasSchemaMatch,
           functionOptions: {
-            schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
           },
         },
       ],
@@ -518,7 +518,7 @@ const processesCore: RulesetDefinition = {
         field: '500',
         function: hasSchemaMatch,
         functionOptions: {
-          schemaUri: `https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/${GIT_COMMIT_OR_TAG}/openapi/schemas/common-core/exception.yaml`,
+          schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
         },
       },
     },

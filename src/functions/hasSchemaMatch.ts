@@ -29,6 +29,24 @@ const resolver = new Resolver({
   },
 });
 
+const schemaCache = new Map<string, Promise<OpenAPIV3_0.SchemaObject>>();
+
+const fetchAndResolveSchema = (schemaUri: string): Promise<OpenAPIV3_0.SchemaObject> => {
+  const cached = schemaCache.get(schemaUri);
+
+  if (cached) {
+    return cached;
+  }
+
+  const result = fetch(schemaUri)
+    .then(response => response.text())
+    .then(responseText => Yaml.parse(responseText).data)
+    .then(responseSchema => resolver.resolve(responseSchema, { baseUri: schemaUri }).then(r => r.result));
+
+  schemaCache.set(schemaUri, result);
+  return result;
+};
+
 const hasSchemaMatch: RulesetFunction<OpenAPIV3_0.ResponseObject | OpenAPIV3_0.RequestBodyObject, Options> = async (
   input,
   options,
@@ -54,10 +72,7 @@ const hasSchemaMatch: RulesetFunction<OpenAPIV3_0.ResponseObject | OpenAPIV3_0.R
   let refSchema = options.schema;
 
   if (options.schemaUri) {
-    refSchema = await fetch(options.schemaUri)
-      .then(response => response.text())
-      .then(responseText => Yaml.parse(responseText).data)
-      .then(responseSchema => resolver.resolve(responseSchema, { baseUri: options.schemaUri }).then(r => r.result));
+    refSchema = await fetchAndResolveSchema(options.schemaUri);
   }
 
   if (!refSchema) {

@@ -1369,7 +1369,7 @@
           },
           {
             "type": "object",
-            "required": ["id", "status", "type"],
+            "required": ["id", "status", "processingEntityType"],
             "properties": {
               "id": {
                 "type": "string"
@@ -1378,9 +1378,9 @@
                 "type": "string",
                 "format": "uri"
               },
-              "type": {
+              "processingEntityType": {
                 "type": "string",
-                "example": ["process", "wps", "openeo"]
+                "enum": ["ogc-api-processes", "openeo"]
               },
               "request": {
                 "oneOf": [
