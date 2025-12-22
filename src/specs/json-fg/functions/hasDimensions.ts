@@ -1,7 +1,7 @@
 import { RulesetFunction } from '@stoplight/spectral-core';
-import { Coordinates } from '../../../types';
-import { errorMessage } from '../../../util';
+import { Coordinates } from '../../types';
 import { getDimensions, isValidCoordinateArray } from './util';
+import { errorMessage } from '@geonovum/standards-checker/engine/util';
 
 interface Options {
   numDimensions: number;

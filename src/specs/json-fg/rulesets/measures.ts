@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RulesetDefinition } from '@stoplight/spectral-core';
 import { schema } from '@stoplight/spectral-functions';
-import { GEOJSON_TYPES } from '../../../types';
 import { hasDimensions } from '../functions/hasDimensions';
 import { isFeature, isFeatureCollection } from '../functions/util';
+import { GEOJSON_TYPES } from '../../types';
 
 export const JSON_FG_MEASURES_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/measures';
 

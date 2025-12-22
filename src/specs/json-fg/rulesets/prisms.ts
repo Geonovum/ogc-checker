@@ -1,8 +1,8 @@
 import { RulesetDefinition } from '@stoplight/spectral-core';
 import { schema } from '@stoplight/spectral-functions';
-import { GeometryTypes } from '../../../types';
-import { errorMessage } from '../../../util';
+import { GeometryTypes } from '../../types';
 import { hasDimensions } from '../functions/hasDimensions';
+import { errorMessage } from '@geonovum/standards-checker/engine/util';
 
 export const JSON_FG_PRISMS_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/prisms';
 
