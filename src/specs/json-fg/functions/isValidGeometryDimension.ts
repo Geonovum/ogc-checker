@@ -3,7 +3,7 @@ import { getFeatures, getGeometryDimension, getPlaceType, isFeatureCollection } 
 import { errorMessage } from '@geonovum/standards-checker/engine/util';
 import { GeometryTypes } from '../../types';
 
-export const isValidGeometryDimension: RulesetFunction<unknown> = async input => {
+export const isValidGeometryDimension: RulesetFunction<unknown> = input => {
   const geometryDimension = getGeometryDimension(input);
 
   if (!isFeatureCollection(input) || geometryDimension === undefined) {

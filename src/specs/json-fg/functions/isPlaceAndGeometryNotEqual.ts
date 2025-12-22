@@ -2,7 +2,7 @@ import { errorMessage } from '@geonovum/standards-checker/engine/util';
 import { RulesetFunction } from '@stoplight/spectral-core';
 import { equals } from 'ramda';
 
-export const isPlaceAndGeometryNotEqual: RulesetFunction<unknown> = async input => {
+export const isPlaceAndGeometryNotEqual: RulesetFunction<unknown> = input => {
   if (
     !(input && typeof input === 'object') ||
     !('place' in input && input.place !== null) ||

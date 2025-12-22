@@ -21,6 +21,14 @@ export enum DocumentTypes {
   FEATURE = 'Feature',
   FEATURECOLLECTION = 'FeatureCollection',
 }
+export const GEOJSON_TYPES = [
+  GeometryTypes.POINT,
+  GeometryTypes.MULTIPOINT,
+  GeometryTypes.LINESTRING,
+  GeometryTypes.MULTILINESTRING,
+  GeometryTypes.POLYGON,
+  GeometryTypes.MULTIPOLYGON,
+];
 
 export type Position2D = [number, number];
 
