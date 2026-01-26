@@ -1,7 +1,7 @@
 import { Spectral } from '@stoplight/spectral-core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
-import { GeometryTypes } from '../../../types';
+import { GeometryTypes } from '../../types';
 import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_POLYHEDRA_URI } from './polyhedra';
