@@ -1,12 +1,43 @@
 import { Spectral } from '@stoplight/spectral-core';
 import { clone } from 'ramda';
-import { describe, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import exampleDoc from '../examples/processes.json';
-import ruleset from './processes-core';
+import ruleset, { SCHEMAS_URI_PREFIX } from './processes-core';
 import { APPLICATION_JSON_TYPE } from '@geonovum/standards-checker';
 
 const spectral = new Spectral();
 spectral.setRuleset(ruleset);
+
+const schemaMocks = new Map<string, Record<string, unknown>>([
+  [SCHEMAS_URI_PREFIX + 'common-core/landingPage.yaml', { type: 'object', required: ['links'] }],
+  [SCHEMAS_URI_PREFIX + 'common-core/confClasses.yaml', { type: 'object', required: ['conformsTo'] }],
+  [SCHEMAS_URI_PREFIX + 'processes-core/processList.yaml', { type: 'object', required: ['processes'] }],
+  [SCHEMAS_URI_PREFIX + 'common-core/exception.yaml', { type: 'object', required: ['type'] }],
+  [SCHEMAS_URI_PREFIX + 'processes-core/execute.yaml', { type: 'object' }],
+  [SCHEMAS_URI_PREFIX + 'processes-core/results.yaml', {}],
+  [SCHEMAS_URI_PREFIX + 'processes-core/statusInfo.yaml', { type: 'object', required: ['id'] }],
+]);
+
+beforeAll(() => {
+  vi.stubGlobal('fetch', async (input: RequestInfo | URL) => {
+    const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+    const schema = schemaMocks.get(url);
+
+    if (!schema) {
+      throw new Error(`No mock schema registered for ${url}`);
+    }
+
+    return {
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify(schema),
+    } as Response;
+  });
+});
+
+afterAll(() => {
+  vi.unstubAllGlobals();
+});
 
 describe('/req/core/landingpage-op', () => {
   test('Fails when landing page path is absent', async () => {
