@@ -1,5 +1,5 @@
 import { hasSchemaMatch } from '@geonovum/standards-checker';
-import type { RulesetDefinition } from '@stoplight/spectral-core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { oas3_0 } from './formats';
 
 export const OGC_API_PROCESSES_OGC_PROCESS_DESCRIPTION_URI =

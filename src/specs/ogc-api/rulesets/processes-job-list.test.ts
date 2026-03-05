@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone, findIndex } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import exampleDoc from '../examples/processes.json';
@@ -22,7 +22,7 @@ describe('/req/job-list/type-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/type'
+      param => param.$ref !== '#/components/parameters/type',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -69,7 +69,7 @@ describe('/req/job-list/processID-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/processID-query'
+      param => param.$ref !== '#/components/parameters/processID-query',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -116,7 +116,7 @@ describe('/req/job-list/status-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/status'
+      param => param.$ref !== '#/components/parameters/status',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -163,7 +163,7 @@ describe('/req/job-list/datetime-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/datetime'
+      param => param.$ref !== '#/components/parameters/datetime',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -207,7 +207,7 @@ describe('/req/job-list/duration-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/minDuration'
+      param => param.$ref !== '#/components/parameters/minDuration',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -249,7 +249,7 @@ describe('/req/job-list/duration-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/maxDuration'
+      param => param.$ref !== '#/components/parameters/maxDuration',
     );
 
     const violations = await spectral.run(oasDoc);
@@ -293,7 +293,7 @@ describe('/req/job-list/limit-definition', () => {
     const oasDoc = clone(exampleDoc);
 
     oasDoc.paths['/jobs'].get.parameters = oasDoc.paths['/jobs'].get.parameters.filter(
-      param => param.$ref !== '#/components/parameters/limit'
+      param => param.$ref !== '#/components/parameters/limit',
     );
 
     const violations = await spectral.run(oasDoc);

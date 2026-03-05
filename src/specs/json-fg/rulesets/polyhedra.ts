@@ -1,5 +1,5 @@
-import { RulesetDefinition } from '@stoplight/spectral-core';
-import { schema } from '@stoplight/spectral-functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { hasDimensions } from '../functions/hasDimensions';
 import { GeometryTypes } from '../../types';
 
@@ -92,7 +92,7 @@ const polyhedra: RulesetDefinition = {
                   'All positions in a "Polyhedron" or "MultiPolyhedron" geometry (JSON-FG geometry with "type" set to "Polyhedron" or "MultiPolyhedron") SHALL have a coordinate dimension of three (3) - or four (4), if measure values are included.',
                 path: ['place', 'coordinates'],
               },
-              context
+              context,
             );
           }
         },

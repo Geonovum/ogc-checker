@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import { GeometryTypes } from '../../types';

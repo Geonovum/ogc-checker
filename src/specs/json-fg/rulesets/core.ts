@@ -1,5 +1,5 @@
-import type { RulesetDefinition } from '@stoplight/spectral-core';
-import { falsy } from '@stoplight/spectral-functions';
+import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { falsy } from '@geonovum/standards-checker/spectral/functions';
 import { DateTime } from 'luxon';
 import { hasPositionRange } from '../functions/hasPositionRange';
 import { hasSameDimensions } from '../functions/hasSameDimensions';

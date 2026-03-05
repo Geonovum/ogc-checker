@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone } from 'ramda';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import exampleDoc from '../examples/processes.json';
@@ -363,7 +363,7 @@ describe('/req/core/job-results-param-outputs', () => {
   test('Fails when outputs parameter is absent', async () => {
     const oasDoc = clone(exampleDoc);
     oasDoc.paths['/jobs/{jobID}/results'].get.parameters = oasDoc.paths['/jobs/{jobID}/results'].get.parameters.filter(
-      (param: { $ref?: string }) => param.$ref !== '#/components/parameters/outputs'
+      (param: { $ref?: string }) => param.$ref !== '#/components/parameters/outputs',
     );
     const violations = await spectral.run(oasDoc);
 

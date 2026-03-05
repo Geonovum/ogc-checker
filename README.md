@@ -1,16 +1,27 @@
 # @geonovum/ogc-checker
 
-Geonovum-specifieke implementatie van de OGC Checker met JSON-FG en OGC API specificaties.
+Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
-## Build
+Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker) — see its documentation for the validation engine, CLI toolkit, and web UI framework.
 
-Voer `npm run build` uit om zowel de webapp (`docs/`) als de CLI bundle (`dist/index.js`) te genereren.
-Alleen de bundle nodig? Gebruik `npm run build:rulesets`.
+**Demo:** https://geonovum-labs.github.io/ogc-checker/
 
-## JSON-FG
+## CLI
 
-Version: 0.3.0\
-Specification: https://docs.ogc.org/DRAFTS/21-045.html
+```bash
+ogc-checker validate --ruleset json-fg --input ./data/spec.json
+ogc-checker validate --ruleset ogc-api-features --input https://example.com/api
+```
+
+Available rulesets: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`.
+
+See the [standards-checker documentation](https://github.com/Geonovum/standards-checker) for all CLI flags and output formats.
+
+## Specifications
+
+### JSON-FG
+
+Version: 0.3.0 — [Specification](https://docs.ogc.org/DRAFTS/21-045.html)
 
 | Requirement                                | Testable | Tested | Remarks                             |
 | ------------------------------------------ | :------: | :----: | ----------------------------------- |
@@ -48,10 +59,9 @@ Specification: https://docs.ogc.org/DRAFTS/21-045.html
 | `/req/profiles/jsonfg-plus`                |    ?     |   ?    |                                     |
 | `/req/api/profile-parameter`               |    ?     |   ?    |                                     |
 
-## OGC API - Features - Part 1: Core
+### OGC API - Features - Part 1: Core
 
-Version: 1.0.1\
-Specification: https://docs.ogc.org/is/17-069r4/17-069r4.html
+Version: 1.0.1 — [Specification](https://docs.ogc.org/is/17-069r4/17-069r4.html)
 
 | Requirement                     | Testable | Tested | Remarks |
 | ------------------------------- | :------: | :----: | ------- |
@@ -72,10 +82,9 @@ Specification: https://docs.ogc.org/is/17-069r4/17-069r4.html
 | `/req/core/f-response`          |   Yes    |  Yes   |         |
 | `/req/oas30/oas-definition-2`   |   Yes    |  Yes   |         |
 
-## OGC API - Features - Part 2: Coordinate Reference Systems by Reference
+### OGC API - Features - Part 2: Coordinate Reference Systems by Reference
 
-Version: 1.0.1\
-Specification: https://docs.ogc.org/is/18-058r1/18-058r1.html
+Version: 1.0.1 — [Specification](https://docs.ogc.org/is/18-058r1/18-058r1.html)
 
 | Requirement                               | Testable | Tested | Remarks                                       |
 | ----------------------------------------- | :------: | :----: | --------------------------------------------- |
@@ -96,10 +105,9 @@ Specification: https://docs.ogc.org/is/18-058r1/18-058r1.html
 | `/req/crs/ogc-crs-header`                 |   Yes    |  Yes   |                                               |
 | `/req/crs/ogc-crs-header-value`           |    No    |   No   |                                               |
 
-## OGC API - Processes - Part 1: Core
+### OGC API - Processes - Part 1: Core
 
-Version: 2.0 (Draft)\
-Specification: https://docs.ogc.org/DRAFTS/18-062r3.html
+Version: 2.0 (Draft) — [Specification](https://docs.ogc.org/DRAFTS/18-062r3.html)
 
 | Requirement                                                     | Testable | Tested | Remarks |
 | --------------------------------------------------------------- | :------: | :----: | ------- |
@@ -185,10 +193,9 @@ Specification: https://docs.ogc.org/DRAFTS/18-062r3.html
 | `/req/job-list/links`                                           |    No    |   No   |         |
 | `/req/json/definition`                                          |   Yes    |  Yes   |         |
 
-## OGC API - Records - Part 1: Core
+### OGC API - Records - Part 1: Core
 
-Version: 1.0 (Draft)\
-Specification: https://docs.ogc.org/DRAFTS/20-004r1.html
+Version: 1.0 (Draft) — [Specification](https://docs.ogc.org/DRAFTS/20-004r1.html)
 
 | Requirement                        | Testable | Tested | Remarks |
 | ---------------------------------- | :------: | :----: | ------- |
@@ -201,14 +208,35 @@ Specification: https://docs.ogc.org/DRAFTS/20-004r1.html
 
 ## Development
 
-Prepare your local environment:
+### Prerequisites
 
-- Install project dependencies: `npm install`
-- Install VSCode extensions: Prettier, ESLint, Tailwind CSS IntelliSense
-- Set VSCode default formatter to `esbenp.prettier-vscode`
+- Node.js 24+
+- pnpm 10+
 
-Start the development server:
+### Setup
 
 ```bash
-npm run dev
+pnpm install
 ```
+
+### Commands
+
+| Command          | Description                                |
+| ---------------- | ------------------------------------------ |
+| `pnpm dev`       | Vite dev server with hot reload            |
+| `pnpm build`     | Full build: tsc + CLI bundle + vite webapp |
+| `pnpm build:cli` | Build only the CLI binary (`dist/cli.js`)  |
+| `pnpm test`      | Vitest in watch mode                       |
+| `pnpm test run`  | Vitest single run                          |
+| `pnpm lint`      | Check for lint and formatting issues       |
+| `pnpm lint:fix`  | Auto-fix lint and formatting issues        |
+
+Run a single test file:
+
+```bash
+npx vitest run src/specs/json-fg/rulesets/core.test.ts
+```
+
+## License
+
+[EUPL-1.2](LICENSE)

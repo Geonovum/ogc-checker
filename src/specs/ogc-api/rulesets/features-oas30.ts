@@ -1,4 +1,4 @@
-import type { RulesetDefinition } from '@stoplight/spectral-core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { oas3_0 } from './formats';
 import { oasDocumentSchema, oasPathParam } from '@stoplight/spectral-rulesets/dist/oas/functions/index.js';
 

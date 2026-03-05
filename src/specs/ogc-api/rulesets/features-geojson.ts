@@ -1,4 +1,4 @@
-import type { RulesetDefinition } from '@stoplight/spectral-core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { oas3_0 } from './formats';
 import { OGC_API_FEATURES_CORE_DOC_URI } from './features-core';
 import { APPLICATION_GEO_JSON_TYPE, hasSchemaMatch } from '@geonovum/standards-checker';

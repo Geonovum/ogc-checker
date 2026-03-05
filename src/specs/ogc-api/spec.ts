@@ -1,19 +1,19 @@
 import {
-  APPLICATION_JSON_TYPE,
-  APPLICATION_OPENAPI_JSON_3_0_TYPE,
-  handleResponse,
-  handleResponseJson,
   Spec,
   SpecLinter,
   SpecResponseMapper,
   spectralLinter,
-} from '@geonovum/standards-checker';
+  handleResponse,
+  handleResponseJson,
+  APPLICATION_JSON_TYPE,
+  APPLICATION_OPENAPI_JSON_3_0_TYPE,
+} from '@geonovum/standards-checker-ui';
 
 import featuresExample from './examples/features.json';
 import processesExample from './examples/processes.json';
 import recordsExample from './examples/records.json';
 import rulesets from './rulesets';
-import { RulesetDefinition } from '@stoplight/spectral-core';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 
 const responseMapper =
   (prefix: string): SpecResponseMapper =>

@@ -1,5 +1,5 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
-import { errorMessage } from '@geonovum/standards-checker/engine/util';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { errorMessage } from '@geonovum/standards-checker';
 import { isValidCoordinateArray, getDimensions } from './util';
 import { Coordinates } from '../../types';
 

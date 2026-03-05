@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import exampleDoc from '../examples/records.json';

@@ -1,4 +1,4 @@
-import { RulesetDefinition } from '@stoplight/spectral-core';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 
 export const JSON_FG_PROFILES_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/profiles';
 

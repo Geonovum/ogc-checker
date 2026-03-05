@@ -1,8 +1,8 @@
-import { RulesetDefinition } from '@stoplight/spectral-core';
-import { schema } from '@stoplight/spectral-functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { GeometryTypes } from '../../types';
 import { hasDimensions } from '../functions/hasDimensions';
-import { errorMessage } from '@geonovum/standards-checker/engine/util';
+import { errorMessage } from '@geonovum/standards-checker';
 
 export const JSON_FG_PRISMS_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/prisms';
 
@@ -94,7 +94,7 @@ const prisms: RulesetDefinition = {
                   'All positions in the "base" member of a JSON-FG geometry of type "Prism" SHALL have a coordinate dimension of two (2) - or three (3), if measure values are included.',
                 path: ['place', 'base'],
               },
-              context
+              context,
             );
           }
 
@@ -109,7 +109,7 @@ const prisms: RulesetDefinition = {
                       'All positions in the "base" member of a JSON-FG geometry of type "Prism" SHALL have a coordinate dimension of two (2) - or three (3), if measure values are included.',
                     path: ['place', 'prisms', index, 'base'],
                   },
-                  context
+                  context,
                 );
               }
             }

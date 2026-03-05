@@ -1,7 +1,7 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
 import { Coordinates } from '../../types';
 import { getDimensions, isValidCoordinateArray } from './util';
-import { errorMessage } from '@geonovum/standards-checker/engine/util';
+import { errorMessage } from '@geonovum/standards-checker';
 
 interface Options {
   numDimensions: number;
@@ -19,7 +19,7 @@ export const hasDimensions: RulesetFunction<unknown, Options> = (input, options)
   if (dimensions.some(dimension => dimension !== options.numDimensions)) {
     return errorMessage(
       options.errorMessage ?? `All positions in a geometry object SHALL have ${options.numDimensions} dimensions.`,
-      options.path
+      options.path,
     );
   }
 };

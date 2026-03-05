@@ -1,4 +1,4 @@
-import { ISpectralDiagnostic } from '@stoplight/spectral-core';
+import { ISpectralDiagnostic } from '@geonovum/standards-checker/spectral/core';
 import { expect } from 'vitest';
 
 expect.extend({

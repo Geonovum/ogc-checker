@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RulesetDefinition } from '@stoplight/spectral-core';
-import { schema } from '@stoplight/spectral-functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { hasDimensions } from '../functions/hasDimensions';
 import { isFeature, isFeatureCollection } from '../functions/util';
 import { GEOJSON_TYPES } from '../../types';
@@ -63,7 +63,7 @@ const measures: RulesetDefinition = {
                   'If a JSON-FG geometry has m coordinates, each position SHALL have three coordinates (in case of a 2D CRS) or four coordinates (in case of a 3D CRS).',
                 path,
               },
-              context
+              context,
             );
           };
 
@@ -73,7 +73,7 @@ const measures: RulesetDefinition = {
 
           if (isFeatureCollection(input) && Array.isArray(input.features)) {
             return input.features.flatMap(
-              (feature: any, index: number) => validateFeature(feature, ['features', index, 'place', 'coordinates']) || []
+              (feature: any, index: number) => validateFeature(feature, ['features', index, 'place', 'coordinates']) || [],
             );
           }
         },

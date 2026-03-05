@@ -1,5 +1,5 @@
-import { RulesetDefinition } from '@stoplight/spectral-core';
-import { schema } from '@stoplight/spectral-functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { isValidGeometryDimension } from '../functions/isValidGeometryDimension';
 import { remoteSchema } from '@geonovum/standards-checker';
 

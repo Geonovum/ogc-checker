@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { omit, reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import featureCollectionDoc from '../examples/feature-collection.json';

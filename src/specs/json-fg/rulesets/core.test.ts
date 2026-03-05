@@ -1,4 +1,4 @@
-import { Spectral } from '@stoplight/spectral-core';
+import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { describe, expect, test } from 'vitest';
 import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
