@@ -1,11 +1,8 @@
-import type { IFunctionResult, RulesetDefinition } from '@stoplight/spectral-core';
-import { oas3_0 } from '@stoplight/spectral-formats';
-import { truthy } from '@stoplight/spectral-functions';
-import hasParameter from '../../../functions/hasParameter';
-import hasPathMatch from '../../../functions/hasPathMatch';
-import hasSchemaMatch from '../../../functions/hasSchemaMatch';
-import { OpenAPIV3_0 } from '../../../openapi-types';
-import { errorMessage } from '../../../util';
+import { hasSchemaMatch, hasParameter, OpenAPIV3_0, hasPathMatch } from '@geonovum/standards-checker';
+import { errorMessage } from '@geonovum/standards-checker';
+import type { IFunctionResult, RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { oas3_0 } from './formats';
+import { truthy } from '@geonovum/standards-checker/spectral/functions';
 
 export const OGC_API_PROCESSES_CORE_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core';
 

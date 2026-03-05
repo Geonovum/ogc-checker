@@ -1,7 +1,7 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
-import { Coordinates, Position } from '../../../types';
-import { errorMessage } from '../../../util';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { errorMessage } from '@geonovum/standards-checker';
 import { isValidCoordinateArray } from './util';
+import { Coordinates, Position } from '../../types';
 
 interface Options {
   x?: [number, number];
@@ -26,13 +26,13 @@ export const hasPositionRange: RulesetFunction<unknown, Options> = (input, optio
   for (const position of positions) {
     if (options.x !== undefined && (position[0] < options.x[0] || position[0] > options.x[1])) {
       return errorMessage(
-        'If the "geometry" member in a JSON-FG feature in the JSON document is not null, the first element of each position SHALL be between -180 and +180 decimal degrees longitude.'
+        'If the "geometry" member in a JSON-FG feature in the JSON document is not null, the first element of each position SHALL be between -180 and +180 decimal degrees longitude.',
       );
     }
 
     if (options.y !== undefined && (position[1] < options.y[0] || position[1] > options.y[1])) {
       return errorMessage(
-        'If the "geometry" member in a JSON-FG feature in the JSON document is not null, the second element of each position SHALL be between -90 and +90 decimal degrees latitude.'
+        'If the "geometry" member in a JSON-FG feature in the JSON document is not null, the second element of each position SHALL be between -90 and +90 decimal degrees latitude.',
       );
     }
   }

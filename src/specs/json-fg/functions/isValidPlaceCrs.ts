@@ -1,5 +1,5 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
-import { errorMessage, getParent, queryPath } from '../../../util';
+import { getParent, queryPath, errorMessage } from '@geonovum/standards-checker';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
 
 const GEOJSON_TYPES = ['Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'GeometryCollection'];
 
@@ -56,6 +56,6 @@ export const isValidPlaceCrs: RulesetFunction<unknown> = async (input, _options,
   return errorMessage(
     'If the "place" member in any JSON-FG feature in the JSON document is not null and the geometry type (member ' +
       '"type") is one of "Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon" or ' +
-      '"GeometryCollection", the CRS SHALL not be OGC:CRS84 or OGC:CRS84h (WGS 84 with axis order longitude/latitude).'
+      '"GeometryCollection", the CRS SHALL not be OGC:CRS84 or OGC:CRS84h (WGS 84 with axis order longitude/latitude).',
   );
 };

@@ -1,11 +1,4 @@
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { sharedConfig } from '@geonovum/standards-checker-ui/vite';
+import { defineConfig, mergeConfig } from 'vitest/config';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base: '/ogc-checker/',
-  build: {
-    outDir: 'docs',
-  },
-});
+export default defineConfig(mergeConfig(sharedConfig, { base: '/ogc-checker/' }));

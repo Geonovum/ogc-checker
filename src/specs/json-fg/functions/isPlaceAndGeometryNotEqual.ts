@@ -1,6 +1,6 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
+import { errorMessage } from '@geonovum/standards-checker';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
 import { equals } from 'ramda';
-import { errorMessage } from '../../../util';
 
 export const isPlaceAndGeometryNotEqual: RulesetFunction<unknown> = input => {
   if (
@@ -14,7 +14,7 @@ export const isPlaceAndGeometryNotEqual: RulesetFunction<unknown> = input => {
   if (equals(input.place, input.geometry)) {
     return errorMessage(
       'If both the "place" and the "geometry" member in a JSON-FG feature in the JSON document are not null, the ' +
-        'values of both members SHALL not be identical.'
+        'values of both members SHALL not be identical.',
     );
   }
 };

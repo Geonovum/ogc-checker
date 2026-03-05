@@ -1,6 +1,6 @@
-import { RulesetFunction } from '@stoplight/spectral-core';
-import { GeometryTypes } from '../../../types';
-import { errorMessage } from '../../../util';
+import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { errorMessage } from '@geonovum/standards-checker';
+import { GeometryTypes } from '../../types';
 
 const containsCrs = (item: unknown) => item && typeof item === 'object' && 'coordRefSys' in item;
 
@@ -44,7 +44,7 @@ export const isValidCollectionCrs: RulesetFunction<unknown> = input => {
     return errorMessage(
       'If the "place" member in any JSON-FG feature in the JSON document is not null and the geometry type (member ' +
         '"type") is "GeometryCollection" or any other geometry type that has embedded geometry objects, no embedded ' +
-        'geometry object SHALL include a "coordRefSys" member.'
+        'geometry object SHALL include a "coordRefSys" member.',
     );
   }
 };
