@@ -17,8 +17,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@geonovum/standards-checker": "^1.0.0-beta.3",
-    "@geonovum/standards-checker-ui": "^1.0.0-beta.3",
+    "@geonovum/standards-checker": "^1.0.0-beta.5",
+    "@geonovum/standards-checker-ui": "^1.0.0-beta.5",
     "@stoplight/spectral-rulesets": "^1.22.0",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0"
