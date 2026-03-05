@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source "../node_modules/@geonovum/standards-checker-ui/dist";
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
