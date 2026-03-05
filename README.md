@@ -2,9 +2,9 @@
 
 Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
-Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker) — see its documentation for the validation engine, CLI toolkit, and web UI framework.
+Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker); see its documentation for the validation engine, CLI toolkit, and web UI framework.
 
-**Demo:** https://geonovum-labs.github.io/ogc-checker/
+**Demo:** https://geonovum.github.io/ogc-checker/
 
 ## CLI
 
