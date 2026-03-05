@@ -1,3 +1,0 @@
-overrides:
-  '@geonovum/standards-checker': link:../standards-checker/packages/core
-  '@geonovum/standards-checker-ui': link:../standards-checker/packages/ui
