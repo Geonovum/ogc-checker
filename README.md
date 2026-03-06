@@ -8,9 +8,25 @@ Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-c
 
 ## CLI
 
+### Quick start (via npx)
+
 ```bash
+npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input ./data/spec.json
+```
+
+### Install globally
+
+```bash
+npm install -g @geonovum/ogc-checker
 ogc-checker validate --ruleset json-fg --input ./data/spec.json
-ogc-checker validate --ruleset ogc-api-features --input https://example.com/api
+```
+
+### From a local clone
+
+```bash
+pnpm install
+pnpm build:cli
+node dist/cli.js validate --ruleset json-fg --input ./data/spec.json
 ```
 
 Available rulesets: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`.
