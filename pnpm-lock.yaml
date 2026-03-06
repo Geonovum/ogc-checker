@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@geonovum/standards-checker':
-        specifier: ^1.0.0-beta.9
-        version: 1.0.0-beta.9
+        specifier: 1.0.0
+        version: 1.0.0
       '@geonovum/standards-checker-ui':
-        specifier: ^1.0.0-beta.9
-        version: 1.0.0-beta.9(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.16)(@geonovum/standards-checker@1.0.0-beta.9)(codemirror@6.0.2)(eslint@10.0.2(jiti@2.6.1))(immer@9.0.21)(prettier@3.8.1)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(lightningcss@1.31.1))
+        specifier: 1.0.0
+        version: 1.0.0(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.16)(@geonovum/standards-checker@1.0.0)(codemirror@6.0.2)(eslint@10.0.2(jiti@2.6.1))(immer@9.0.21)(prettier@3.8.1)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(lightningcss@1.31.1))
       '@stoplight/spectral-rulesets':
         specifier: ^1.22.0
         version: 1.22.0
@@ -406,13 +406,13 @@ packages:
     resolution: {integrity: sha512-bIZEUzOI1jkhviX2cp5vNyXQc6olzb2ohewQubuYlMXZ2Q/XjBO0x0XhGPvc9fjSIiUN0vw+0hq53BJ4eQSJKQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@geonovum/standards-checker-ui@1.0.0-beta.9':
-    resolution: {integrity: sha512-x334G4qsvBFxLA90kB5zUDzDmgapf+YQVjP6K/QMfr8gegzGbFolpTcMlrQOzFj6AIG36qiQr/iWsSYPpkIGvg==}
+  '@geonovum/standards-checker-ui@1.0.0':
+    resolution: {integrity: sha512-ekEPKGHUvBhGTS/9iAdR9pn+WpoKnw4PnpCNMrdPrs482qQVC33/GA7oCk6+sT2eZ+2ZKWpgQKFqtDaVb80ocQ==}
     peerDependencies:
       '@geonovum/standards-checker': ^1.0.0-beta.1
 
-  '@geonovum/standards-checker@1.0.0-beta.9':
-    resolution: {integrity: sha512-ypivj2AUO753Il0q7INNtt1NPn5LSkrlq+yWTVV8YxsorjAduneFGYrkYzKnoHug6Ab+LwgvEVamE79KrR5HIQ==}
+  '@geonovum/standards-checker@1.0.0':
+    resolution: {integrity: sha512-aWFL3lfIL/pRPH4MND+2iRv2qoVL0K+tD1z27MxkV+YTArxEMgxnYATQQtkIEumtOt/AHuynFWohhqIUXijEqg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2818,12 +2818,12 @@ snapshots:
       '@eslint/core': 1.1.0
       levn: 0.4.1
 
-  '@geonovum/standards-checker-ui@1.0.0-beta.9(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.16)(@geonovum/standards-checker@1.0.0-beta.9)(codemirror@6.0.2)(eslint@10.0.2(jiti@2.6.1))(immer@9.0.21)(prettier@3.8.1)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(lightningcss@1.31.1))':
+  '@geonovum/standards-checker-ui@1.0.0(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.16)(@geonovum/standards-checker@1.0.0)(codemirror@6.0.2)(eslint@10.0.2(jiti@2.6.1))(immer@9.0.21)(prettier@3.8.1)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
       '@codemirror/lang-json': 6.0.2
       '@codemirror/lint': 6.9.5
       '@eslint/js': 10.0.1(eslint@10.0.2(jiti@2.6.1))
-      '@geonovum/standards-checker': 1.0.0-beta.9
+      '@geonovum/standards-checker': 1.0.0
       '@modyfi/vite-plugin-yaml': 1.1.1(rollup@4.59.0)(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(lightningcss@1.31.1))
       '@stoplight/spectral-core': 1.21.0
       '@stoplight/spectral-parsers': 1.0.5
@@ -2864,7 +2864,7 @@ snapshots:
       - use-sync-external-store
       - vite
 
-  '@geonovum/standards-checker@1.0.0-beta.9':
+  '@geonovum/standards-checker@1.0.0':
     dependencies:
       '@stoplight/better-ajv-errors': 1.0.3(ajv@8.18.0)
       '@stoplight/json-ref-readers': 1.2.2

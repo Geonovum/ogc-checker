@@ -12,19 +12,19 @@ Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-c
 
 ```bash
 # From a local file
-npx @geonovum/ogc-checker@beta validate --ruleset json-fg --input ./data/spec.json
+npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input ./data/spec.json
 
 # From a URL
-npx @geonovum/ogc-checker@beta validate --ruleset json-fg --input https://example.com/spec.json
+npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input https://example.com/spec.json
 
 # From stdin
-cat spec.json | npx @geonovum/ogc-checker@beta validate --ruleset json-fg
+cat spec.json | npx @geonovum/ogc-checker@latest validate --ruleset json-fg
 ```
 
 ### Install globally
 
 ```bash
-npm install -g @geonovum/ogc-checker@beta
+npm install -g @geonovum/ogc-checker@latest
 ogc-checker validate --ruleset json-fg --input ./data/spec.json
 ```
 
@@ -33,12 +33,21 @@ ogc-checker validate --ruleset json-fg --input ./data/spec.json
 ```bash
 pnpm install
 pnpm build:cli
-node dist/cli.js validate --ruleset json-fg --input ./data/spec.json
+node dist/cli.mjs validate --ruleset json-fg --input ./data/spec.json
 ```
 
 Available rulesets: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`.
 
-See the [standards-checker documentation](https://github.com/Geonovum/standards-checker) for all CLI flags and output formats.
+### CLI flags
+
+| Flag                | Description                               | Default      |
+| ------------------- | ----------------------------------------- | ------------ |
+| `--ruleset <name>`  | Ruleset to run (listed in `--help`)       | _(required)_ |
+| `--input <file\|->` | Input file, URL, or `-` for stdin         | `-`          |
+| `--format <fmt>`    | Output: `table`, `json`                   | `table`      |
+| `--fail-on <level>` | Exit code policy: `none`, `warn`, `error` | `error`      |
+
+Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected error.
 
 ## Specifications
 
