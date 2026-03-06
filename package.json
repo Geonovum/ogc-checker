@@ -1,7 +1,7 @@
 {
   "name": "@geonovum/ogc-checker",
   "version": "1.0.0-beta.1",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.30.3",
   "license": "EUPL-1.2",
   "type": "module",
   "bin": {
@@ -17,8 +17,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@geonovum/standards-checker": "^1.0.0-beta.5",
-    "@geonovum/standards-checker-ui": "^1.0.0-beta.5",
+    "@geonovum/standards-checker": "^1.0.0-beta.6",
+    "@geonovum/standards-checker-ui": "^1.0.0-beta.6",
     "@stoplight/spectral-rulesets": "^1.22.0",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0"
@@ -27,11 +27,11 @@
     "@tailwindcss/postcss": "^4.2.1",
     "@types/luxon": "^3.7.1",
     "@types/ramda": "^0.31.1",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.2",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
-    "tailwindcss": "^4.2.0",
-    "tsdown": "^0.15.9",
+    "tailwindcss": "^4.2.1",
+    "tsdown": "^0.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
