@@ -11,13 +11,13 @@ Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-c
 ### Quick start (via npx)
 
 ```bash
-npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input ./data/spec.json
+npx @geonovum/ogc-checker@beta validate --ruleset json-fg --input ./data/spec.json
 ```
 
 ### Install globally
 
 ```bash
-npm install -g @geonovum/ogc-checker
+npm install -g @geonovum/ogc-checker@beta
 ogc-checker validate --ruleset json-fg --input ./data/spec.json
 ```
 
