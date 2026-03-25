@@ -1,5 +1,7 @@
 # Geonovum OGC Checker
 
+[![npm](https://img.shields.io/npm/v/@geonovum/ogc-checker)](https://www.npmjs.com/package/@geonovum/ogc-checker)
+
 Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
 Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker); see its documentation for the validation engine, CLI toolkit, and web UI framework.
@@ -268,6 +270,17 @@ Run a single test file:
 ```bash
 npx vitest run src/specs/json-fg/rulesets/core.test.ts
 ```
+
+### Publishing
+
+Published to npm automatically when a version tag is pushed:
+
+```bash
+git tag v1.0.0
+git push --tags
+```
+
+This triggers the CI workflow that builds, tests, publishes to npm, and deploys to GitHub Pages.
 
 ## License
 
