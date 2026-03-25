@@ -27,8 +27,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@geonovum/standards-checker": "1.0.0",
-    "@geonovum/standards-checker-ui": "1.0.0",
+    "@geonovum/standards-checker": "1.0.1",
+    "@geonovum/standards-checker-ui": "1.0.1",
     "@stoplight/spectral-rulesets": "^1.22.0",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0"
@@ -41,7 +41,7 @@
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
-    "tsdown": "^0.21.4",
+    "tsdown": "^0.21.5",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.1.1"
