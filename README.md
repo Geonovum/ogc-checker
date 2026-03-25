@@ -1,4 +1,4 @@
-# @geonovum/ogc-checker
+# Geonovum OGC Checker
 
 Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
