@@ -37,7 +37,7 @@
     "@tailwindcss/postcss": "^4.2.2",
     "@types/luxon": "^3.7.1",
     "@types/ramda": "^0.31.1",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
