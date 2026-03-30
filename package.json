@@ -41,7 +41,7 @@
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
-    "tsdown": "^0.21.5",
+    "tsdown": "^0.21.7",
     "typescript": "^5.9.3",
     "vite": "^8.0.3",
     "vitest": "^4.1.2"
