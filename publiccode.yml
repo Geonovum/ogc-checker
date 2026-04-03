@@ -6,7 +6,6 @@ softwareType: standalone/web
 developmentStatus: stable
 
 categories:
-  - data-visualization
   - it-development
 
 description:
