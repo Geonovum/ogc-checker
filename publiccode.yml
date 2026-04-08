@@ -1,0 +1,47 @@
+publiccodeYmlVersion: "0.5"
+name: Geonovum OGC Checker
+url: https://github.com/Geonovum/ogc-checker
+landingURL: https://geonovum.github.io/ogc-checker/
+softwareType: standalone/web
+developmentStatus: stable
+
+categories:
+  - it-development
+
+description:
+  nl:
+    shortDescription: >-
+      Checker voor validatie en linting van OGC API-standaarden en
+      OGC Features and Geometries JSON (JSON-FG).
+
+    longDescription: |
+      Geonovum OGC Checker is een web-based validatie- en lintingtool
+      voor OGC API-standaarden en OGC Features and Geometries JSON
+      (JSON-FG) Part 1 Core.
+
+      De tool ondersteunt onder andere:
+      - OGC API Features Part 1: Core
+      - OGC API Features Part 2: Coordinate Reference Systems by Reference
+      - OGC API Processes Part 1: Core
+      - JSON-FG (Features and Geometries JSON)
+
+      Met de checker kunnen developers en dataproviders hun implementaties
+      toetsen aan de vereisten uit de OGC-specificaties.
+
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - nl
+
+intendedAudience:
+  countries:
+    - NL
+
+legal:
+  license: MIT
+  mainCopyrightOwner: Geonovum
+
+maintenance:
+  type: internal
+  contacts:
+    - name: Geonovum
