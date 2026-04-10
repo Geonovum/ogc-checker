@@ -1,12 +1,14 @@
-publiccodeYmlVersion: "0.5"
+publiccodeYmlVersion: "0.5.0"
 name: Geonovum OGC Checker
 url: https://github.com/Geonovum/ogc-checker
 landingURL: https://geonovum.github.io/ogc-checker/
+platforms:
+  - web
 softwareType: standalone/web
 developmentStatus: stable
 
 categories:
-  - it-development
+  - geographic-information-systems
 
 description:
   nl:
@@ -28,17 +30,47 @@ description:
       Met de checker kunnen developers en dataproviders hun implementaties
       toetsen aan de vereisten uit de OGC-specificaties.
 
+    features:
+      - Validatie van JSON-FG documenten
+      - Validatie van OGC API Features endpoints
+      - Validatie van OGC API Processes endpoints
+      - Validatie van OGC API Records endpoints
+      - Beschikbaar als webapplicatie en CLI-tool
+
+  en:
+    shortDescription: >-
+      Checker for validating and linting OGC API standards and OGC
+      Features and Geometries JSON (JSON-FG).
+
+    longDescription: |
+      Geonovum OGC Checker is a web-based validation and linting tool
+      for OGC API standards and OGC Features and Geometries JSON
+      (JSON-FG) Part 1 Core.
+
+      The tool supports, among others:
+      - OGC API Features Part 1: Core
+      - OGC API Features Part 2: Coordinate Reference Systems by Reference
+      - OGC API Processes Part 1: Core
+      - JSON-FG (Features and Geometries JSON)
+
+      The checker allows developers and data providers to test their
+      implementations against the requirements of the OGC specifications.
+      It is also available as a CLI tool via npx.
+
+    features:
+      - JSON-FG document validation
+      - OGC API Features endpoint validation
+      - OGC API Processes endpoint validation
+      - OGC API Records endpoint validation
+      - Available as a web application and CLI tool
+
 localisation:
   localisationReady: false
   availableLanguages:
-    - nl
-
-intendedAudience:
-  countries:
-    - NL
+    - en
 
 legal:
-  license: MIT
+  license: EUPL-1.2
   mainCopyrightOwner: Geonovum
 
 maintenance:
