@@ -29,7 +29,7 @@
   "dependencies": {
     "@geonovum/standards-checker": "1.0.4",
     "@geonovum/standards-checker-ui": "1.0.4",
-    "@stoplight/spectral-rulesets": "^1.22.0",
+    "@stoplight/spectral-rulesets": "^1.22.1",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0"
   },
