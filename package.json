@@ -1,7 +1,7 @@
 {
   "name": "@geonovum/ogc-checker",
   "version": "1.0.1",
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@10.33.0",
   "license": "EUPL-1.2",
   "repository": {
     "type": "git",
@@ -27,8 +27,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@geonovum/standards-checker": "1.0.7",
-    "@geonovum/standards-checker-ui": "1.0.7",
+    "@geonovum/standards-checker": "1.0.8",
+    "@geonovum/standards-checker-ui": "1.0.8",
     "@stoplight/spectral-rulesets": "^1.22.1",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0"
