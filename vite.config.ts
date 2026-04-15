@@ -1,4 +1,3 @@
-import { sharedConfig } from '@geonovum/standards-checker-ui/vite';
-import { defineConfig, mergeConfig } from 'vitest/config';
+import { createConfig } from '@geonovum/standards-checker-ui/vite';
 
-export default defineConfig(mergeConfig(sharedConfig, { base: '/ogc-checker/' }));
+export default createConfig({ base: '/ogc-checker/' });
