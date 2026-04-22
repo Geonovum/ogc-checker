@@ -1,3 +1,3 @@
-import { createConfig } from '@geonovum/standards-checker-ui/vite';
+import { createConfig } from '@geonovum/standards-checker/vite';
 
 export default createConfig({ base: '/ogc-checker/' });

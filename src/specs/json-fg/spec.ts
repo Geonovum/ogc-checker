@@ -1,7 +1,7 @@
-import { Spec, spectralLinter } from '@geonovum/standards-checker-ui';
+import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { Spec, spectralLinter } from '@geonovum/standards-checker/ui';
 import example from './examples/feature.json';
 import rulesets from './rulesets';
-import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 
 const linterName = (confClass: string) => confClass.replace('http://www.opengis.net/spec/', '');
 
