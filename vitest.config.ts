@@ -1,8 +1,1 @@
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    environment: 'node',
-    setupFiles: ['./src/vitest-matchers.ts'],
-  },
-});
+export { default } from '@geonovum/standards-checker/vitest';

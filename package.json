@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/Geonovum/ogc-checker"
   },
+  "engines": {
+    "node": ">=20.17"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -20,7 +23,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "tsc -b && pnpm run build:cli && vite build",
-    "build:cli": "sc-build-cli src/cli.ts",
+    "build:cli": "build-cli src/cli.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
@@ -28,7 +31,7 @@
   },
   "prettier": "@geonovum/standards-checker/prettier",
   "dependencies": {
-    "@geonovum/standards-checker": "^1.1.0-beta.1",
+    "@geonovum/standards-checker": "^1.1.0",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0",
     "react": "^19.2.5",
@@ -42,6 +45,7 @@
     "eslint": "^10.2.1",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
+    "vite": "^8.0.9",
     "vitest": "^4.1.5"
   }
 }
