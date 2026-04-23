@@ -1,5 +1,5 @@
-import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { RulesetPlugin, RulesetPluginIndex } from '@geonovum/standards-checker';
+import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import specs from './specs';
 import jsonFgRulesets from './specs/json-fg/rulesets';
 import ogcApiRulesets from './specs/ogc-api/rulesets';
