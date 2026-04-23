@@ -259,7 +259,7 @@ pnpm install
 | ---------------- | ------------------------------------------ |
 | `pnpm dev`       | Vite dev server with hot reload            |
 | `pnpm build`     | Full build: tsc + CLI bundle + vite webapp |
-| `pnpm build:cli` | Build only the CLI binary (`dist/cli.js`)  |
+| `pnpm build:cli` | Build only the CLI binary (`dist/cli.mjs`) |
 | `pnpm test`      | Vitest in watch mode                       |
 | `pnpm test run`  | Vitest single run                          |
 | `pnpm lint`      | Check for lint and formatting issues       |

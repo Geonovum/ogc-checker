@@ -1,1 +1,1 @@
-export { default } from '@geonovum/standards-checker-ui/eslint.config';
+export { default } from '@geonovum/standards-checker/eslint.config';

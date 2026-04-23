@@ -1,6 +1,6 @@
 import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { oasDocumentSchema, oasPathParam } from '@geonovum/standards-checker/spectral/rulesets';
 import { oas3_0 } from './formats';
-import { oasDocumentSchema, oasPathParam } from '@stoplight/spectral-rulesets/dist/oas/functions/index.js';
 
 export const OGC_API_FEATURES_OAS30_URI = 'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/oas30';
 
