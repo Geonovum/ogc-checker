@@ -27,7 +27,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@geonovum/standards-checker": "1.0.8",
+    "@geonovum/standards-checker": "1.1.1",
     "@geonovum/standards-checker-ui": "1.0.8",
     "@stoplight/spectral-rulesets": "^1.22.1",
     "luxon": "^3.7.2",
