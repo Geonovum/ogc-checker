@@ -42,7 +42,7 @@
     "@types/luxon": "^3.7.1",
     "@types/ramda": "^0.31.1",
     "esbuild": "^0.28.0",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "vite": "^8.0.9",
