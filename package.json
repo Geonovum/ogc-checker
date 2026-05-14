@@ -34,7 +34,7 @@
     "@geonovum/standards-checker": "^1.1.4",
     "luxon": "^3.7.2",
     "ramda": "^0.32.0",
-    "react": "^19.2.5",
+    "react": "^19.2.6",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.15.0"
   },
