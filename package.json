@@ -1,6 +1,6 @@
 {
   "name": "@geonovum/ogc-checker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "packageManager": "pnpm@10.33.0",
   "license": "EUPL-1.2",
   "repository": {
