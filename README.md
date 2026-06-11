@@ -55,7 +55,7 @@ Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected e
 
 ### JSON-FG
 
-Version: 0.3.0 — [Specification](https://docs.ogc.org/DRAFTS/21-045.html)
+Version: 1.0.0 — [Specification](https://docs.ogc.org/is/21-045r1/21-045r1.html)
 
 | Requirement                                | Testable | Tested | Remarks                             |
 | ------------------------------------------ | :------: | :----: | ----------------------------------- |

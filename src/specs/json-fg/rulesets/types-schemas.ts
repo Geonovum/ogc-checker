@@ -3,12 +3,12 @@ import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { isValidGeometryDimension } from '../functions/isValidGeometryDimension';
 import { remoteSchema } from '@geonovum/standards-checker';
 
-export const JSON_FG_TYPES_SCHEMAS_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/types-schemas';
+export const JSON_FG_TYPES_SCHEMAS_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/types-schemas';
 
-export const JSON_FG_TYPES_SCHEMAS_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#types-schemas_';
+export const JSON_FG_TYPES_SCHEMAS_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#types-schemas_';
 
 const typesSchemas: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/types-schemas',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/types-schemas',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Feature Types and Schemas"',
   rules: {
     '/req/types-schemas/metadata': {

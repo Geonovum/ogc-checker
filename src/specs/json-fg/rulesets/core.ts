@@ -7,14 +7,14 @@ import { isPlaceAndGeometryNotEqual } from '../functions/isPlaceAndGeometryNotEq
 import { isValidPlaceCrs } from '../functions/isValidPlaceCrs';
 import { remoteSchema, isValidDate, isValidDateTime } from '@geonovum/standards-checker';
 
-export const JSON_FG_CORE_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/core';
+export const JSON_FG_CORE_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/core';
 
-export const JSON_FG_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#core_';
+export const JSON_FG_CORE_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#core_';
 
 const isUnbounded = (input: unknown) => typeof input === 'string' && input === '..';
 
 const core: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/core',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/core',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Core"',
   rules: {
     '/req/core/schema-valid': {
@@ -31,27 +31,27 @@ const core: RulesetDefinition = {
               discriminator: { propertyName: 'type' },
               required: ['conformsTo'],
               properties: {
-                conformsTo: { $ref: 'https://beta.schemas.opengis.net/json-fg/conformsto.json' },
+                conformsTo: { $ref: 'https://schemas.opengis.net/json-fg/conformsto.json' },
               },
               oneOf: [
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/feature.json' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/featurecollection.json' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Point' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPoint' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/LineString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiLineString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/GeometryCollection' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polyhedron' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolyhedron' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Prism' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPrism' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CircularString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CompoundCurve' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CurvePolygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiCurve' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiSurface' },
+                { $ref: 'https://schemas.opengis.net/json-fg/feature.json' },
+                { $ref: 'https://schemas.opengis.net/json-fg/featurecollection.json' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Point' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPoint' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/LineString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiLineString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/GeometryCollection' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polyhedron' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolyhedron' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Prism' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPrism' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CircularString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CompoundCurve' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CurvePolygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiCurve' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiSurface' },
               ],
             },
           },

@@ -4,14 +4,14 @@ import { GeometryTypes } from '../../types';
 import { hasDimensions } from '../functions/hasDimensions';
 import { errorMessage } from '@geonovum/standards-checker';
 
-export const JSON_FG_PRISMS_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/prisms';
+export const JSON_FG_PRISMS_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/prisms';
 
-export const JSON_FG_PRISMS_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#prisms_';
+export const JSON_FG_PRISMS_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#prisms_';
 
 const PRISM_TYPES = [GeometryTypes.PRISM, GeometryTypes.MULTIPRISM];
 
 const prisms: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/prisms',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/prisms',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Prims"',
   rules: {
     '/req/prisms/metadata': {

@@ -3,14 +3,14 @@ import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { hasDimensions } from '../functions/hasDimensions';
 import { GeometryTypes } from '../../types';
 
-export const JSON_FG_POLYHEDRA_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/polyhedra';
+export const JSON_FG_POLYHEDRA_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/polyhedra';
 
-export const JSON_FG_POLYHEDRA_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#polyhedra_';
+export const JSON_FG_POLYHEDRA_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#polyhedra_';
 
 const POLYHEDRON_TYPES = [GeometryTypes.POLYHEDRON, GeometryTypes.MULTIPOLYHEDRON];
 
 const polyhedra: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/polyhedra',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/polyhedra',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Polyhedra"',
   rules: {
     '/req/polyhedra/metadata': {

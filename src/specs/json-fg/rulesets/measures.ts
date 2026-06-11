@@ -5,12 +5,12 @@ import { hasDimensions } from '../functions/hasDimensions';
 import { isFeature, isFeatureCollection } from '../functions/util';
 import { GEOJSON_TYPES } from '../../types';
 
-export const JSON_FG_MEASURES_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/measures';
+export const JSON_FG_MEASURES_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/measures';
 
-export const JSON_FG_MEASURES_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#measures_';
+export const JSON_FG_MEASURES_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#measures_';
 
 const measures: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/measures',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/measures',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Measures"',
   rules: {
     '/req/measures/metadata': {
