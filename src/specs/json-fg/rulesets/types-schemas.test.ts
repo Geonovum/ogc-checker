@@ -345,3 +345,42 @@ describe('/req/types-schemas/geometry-dimension', () => {
     expect(violations).toContainViolation('/req/types-schemas/geometry-dimension');
   });
 });
+
+describe('/req/types-schemas/single-feature-schema', () => {
+  test('Succeeds when "featureSchema" is a string and all "featureType" members are equal', async () => {
+    const violations = await spectral.run({
+      ...omit(['featureType'], featureCollectionDoc),
+      features: featureCollectionDoc.features.map(feature => ({ ...feature, featureType: 'Airport' })),
+    });
+
+    expect(violations).toHaveLength(0);
+  });
+
+  test('Fails when "featureSchema" is a string and "featureType" members differ', async () => {
+    const violations = await spectral.run({
+      ...omit(['featureType'], featureCollectionDoc),
+      features: [
+        { ...featureCollectionDoc.features[0], featureType: 'Airport' },
+        { ...featureCollectionDoc.features[1], featureType: 'Airfield' },
+      ],
+    });
+
+    expect(violations).toContainViolation('/req/types-schemas/single-feature-schema');
+  });
+
+  test('Succeeds when "featureType" members differ but "featureSchema" is not a string', async () => {
+    const violations = await spectral.run({
+      ...omit(['featureType'], featureCollectionDoc),
+      featureSchema: {
+        Airport: 'https://example.org/data/v1/collections/airports/schema',
+        Airfield: 'https://example.org/data/v1/collections/airfields/schema',
+      },
+      features: [
+        { ...featureCollectionDoc.features[0], featureType: 'Airport' },
+        { ...featureCollectionDoc.features[1], featureType: 'Airfield' },
+      ],
+    });
+
+    expect(violations).toHaveLength(0);
+  });
+});

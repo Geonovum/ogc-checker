@@ -7,16 +7,22 @@ import { isPlaceAndGeometryNotEqual } from '../functions/isPlaceAndGeometryNotEq
 import { isValidPlaceCrs } from '../functions/isValidPlaceCrs';
 import { remoteSchema, isValidDate, isValidDateTime } from '@geonovum/standards-checker';
 
-export const JSON_FG_CORE_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/core';
+export const JSON_FG_CORE_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/core';
 
-export const JSON_FG_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#core_';
+export const JSON_FG_CORE_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#core_';
 
 const isUnbounded = (input: unknown) => typeof input === 'string' && input === '..';
 
 const core: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/core',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/core',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Core"',
   rules: {
+    // Validate against the JSON Schema of a JSON-FG root object. We deliberately hand-roll the
+    // discriminator + per-type `oneOf` here rather than `$ref`-ing the official
+    // `jsonfg-root-object.json`: that schema uses a plain (non-discriminated) `oneOf`, so AJV emits
+    // ~8 generic violations for any structural error (e.g. a feature missing `geometry` is reported
+    // as also missing coordinates/geometries/base/prisms/...). The `type` discriminator routes to
+    // the matching branch and yields a single precise violation.
     '/req/core/schema-valid': {
       given: '$',
       message: 'The JSON object SHALL validate against the JSON Schema of a JSON-FG root object. {{error}}.',
@@ -31,27 +37,27 @@ const core: RulesetDefinition = {
               discriminator: { propertyName: 'type' },
               required: ['conformsTo'],
               properties: {
-                conformsTo: { $ref: 'https://beta.schemas.opengis.net/json-fg/conformsto.json' },
+                conformsTo: { $ref: 'https://schemas.opengis.net/json-fg/conformsto.json' },
               },
               oneOf: [
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/feature.json' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/featurecollection.json' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Point' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPoint' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/LineString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiLineString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/GeometryCollection' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polyhedron' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolyhedron' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/Prism' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPrism' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CircularString' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CompoundCurve' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/CurvePolygon' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiCurve' },
-                { $ref: 'https://beta.schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiSurface' },
+                { $ref: 'https://schemas.opengis.net/json-fg/feature.json' },
+                { $ref: 'https://schemas.opengis.net/json-fg/featurecollection.json' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Point' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPoint' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/LineString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiLineString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/GeometryCollection' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Polyhedron' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPolyhedron' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/Prism' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiPrism' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CircularString' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CompoundCurve' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/CurvePolygon' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiCurve' },
+                { $ref: 'https://schemas.opengis.net/json-fg/geometry-object.json#/$defs/MultiSurface' },
               ],
             },
           },
@@ -317,9 +323,9 @@ const core: RulesetDefinition = {
         functionOptions: { x: [-180, 180], y: [-90, 90] },
       },
     },
-    '/req/core/place': {
+    '/req/core/place-geometries': {
       given: '$..place',
-      documentationUrl: JSON_FG_CORE_DOC_URI + 'place',
+      documentationUrl: JSON_FG_CORE_DOC_URI + 'place-geometries',
       severity: 'error',
       then: {
         function: isValidPlaceCrs,

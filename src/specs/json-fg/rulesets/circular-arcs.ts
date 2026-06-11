@@ -2,9 +2,9 @@ import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { schema } from '@geonovum/standards-checker/spectral/functions';
 import { GeometryTypes } from '../../types';
 
-export const JSON_FG_CIRCULAR_ARCS_URI = 'http://www.opengis.net/spec/json-fg-1/0.3/conf/circular-arcs';
+export const JSON_FG_CIRCULAR_ARCS_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/circular-arcs';
 
-export const JSON_FG_CIRCULAR_ARCS_DOC_URI = 'https://docs.ogc.org/DRAFTS/21-045.html#circular-arcs_';
+export const JSON_FG_CIRCULAR_ARCS_DOC_URI = 'https://docs.ogc.org/is/21-045r1/21-045r1.html#circular-arcs_';
 
 const CIRCULAR_ARC_TYPES = [
   GeometryTypes.CIRCULARSTRING,
@@ -15,7 +15,7 @@ const CIRCULAR_ARC_TYPES = [
 ];
 
 const circularArcs: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/0.3/req/circular-arcs',
+  documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/circular-arcs',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Circular Arcs"',
   rules: {
     '/req/circular-arcs/metadata': {

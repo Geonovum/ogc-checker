@@ -391,7 +391,7 @@ describe('/req/core/geometry-wgs84', () => {
   });
 });
 
-describe('/req/core/place', () => {
+describe('/req/core/place-geometries', () => {
   test('Succeeds when a GeoJSON type and a non-CRS84 coordRefSys is given on the feature level.', async () => {
     const violations = await spectral.run({
       ...featureDoc,
@@ -414,7 +414,7 @@ describe('/req/core/place', () => {
       },
     });
 
-    expect(violations).toContainViolation('/req/core/place');
+    expect(violations).toContainViolation('/req/core/place-geometries');
   });
 
   test('Succeeds when a GeoJSON type and a non-CRS84 coordRefSys is given on the feature collection level.', async () => {
@@ -450,7 +450,7 @@ describe('/req/core/place', () => {
       ],
     });
 
-    expect(violations).toContainViolation('/req/core/place');
+    expect(violations).toContainViolation('/req/core/place-geometries');
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys by ref is given on the feature level.', async () => {
@@ -466,7 +466,7 @@ describe('/req/core/place', () => {
       },
     });
 
-    expect(violations).toContainViolation('/req/core/place');
+    expect(violations).toContainViolation('/req/core/place-geometries');
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys by ref is given on the feature collection level.', async () => {
@@ -487,7 +487,7 @@ describe('/req/core/place', () => {
       ],
     });
 
-    expect(violations).toContainViolation('/req/core/place');
+    expect(violations).toContainViolation('/req/core/place-geometries');
   });
 });
 

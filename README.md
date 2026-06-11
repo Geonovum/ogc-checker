@@ -55,43 +55,43 @@ Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected e
 
 ### JSON-FG
 
-Version: 0.3.0 — [Specification](https://docs.ogc.org/DRAFTS/21-045.html)
+Version: 1.0.0 — [Specification](https://docs.ogc.org/is/21-045r1/21-045r1.html)
 
 | Requirement                                | Testable | Tested | Remarks                             |
 | ------------------------------------------ | :------: | :----: | ----------------------------------- |
 | `/req/core/schema-valid`                   |   Yes    |  Yes   |                                     |
 | `/req/core/metadata`                       |   Yes    |  Yes   |                                     |
-| `/req/core/instant`                        |   Yes    |  Yes   |                                     |
-| `/req/core/interval`                       |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
+| `/req/core/instant`                        |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
+| `/req/core/interval`                       |   Yes    |  Yes   |                                     |
 | `/req/core/instant-and-interval`           |   Yes    |  Yes   |                                     |
 | `/req/core/utc`                            |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
 | `/req/core/coordinate-dimension`           |   Yes    |  Yes   |                                     |
 | `/req/core/geometry-wgs84`                 |   Yes    |  Yes   |                                     |
 | `/req/core/geometry-no-jsonfg-extension`   |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
-| `/req/core/geom-valid`                     |   Yes    |   No   |                                     |
-| `/req/core/place`                          |   Yes    |  Yes   |                                     |
+| `/req/core/valid-geometry`                 |   Yes    |   No   |                                     |
+| `/req/core/place-geometries`               |   Yes    |  Yes   |                                     |
 | `/req/core/same-crs`                       |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
 | `/req/core/fallback`                       |   Yes    |  Yes   |                                     |
 | `/req/core/axis-order`                     |    No    |   No   |                                     |
 | `/req/polyhedra/metadata`                  |   Yes    |  Yes   |                                     |
 | `/req/polyhedra/coordinates`               |   Yes    |  Yes   |                                     |
-| `/req/polyhedra/geom-valid`                |   Yes    |   No   |                                     |
+| `/req/polyhedra/valid-geometry`            |   Yes    |   No   |                                     |
 | `/req/prisms/metadata`                     |   Yes    |  Yes   |                                     |
 | `/req/prisms/coordinates`                  |   Yes    |  Yes   |                                     |
 | `/req/circular-arcs/metadata`              |   Yes    |  Yes   |                                     |
-| `/req/circular-arcs/geom-valid`            |   Yes    |   No   |                                     |
+| `/req/circular-arcs/valid-geometry`        |   Yes    |   No   |                                     |
 | `/req/measures/metadata`                   |   Yes    |  Yes   |                                     |
 | `/req/measures/coordinates`                |   Yes    |  Yes   |                                     |
 | `/req/measures/sub-geometries`             |   Yes    |  Yes   | Covered by `/req/core/schema-valid` |
 | `/req/types-schemas/metadata`              |   Yes    |  Yes   |                                     |
 | `/req/types-schemas/feature-type`          |   Yes    |  Yes   |                                     |
 | `/req/types-schemas/geometry-dimension`    |   Yes    |  Yes   |                                     |
-| `/req/types-schemas/feature-schemas`       |    ?     |   ?    |                                     |
-| `/req/types-schemas/single-feature-schema` |    ?     |   ?    |                                     |
-| `/req/profiles/rfc7946`                    |    ?     |   ?    |                                     |
-| `/req/profiles/jsonfg`                     |    ?     |   ?    |                                     |
-| `/req/profiles/jsonfg-plus`                |    ?     |   ?    |                                     |
-| `/req/api/profile-parameter`               |    ?     |   ?    |                                     |
+| `/req/types-schemas/feature-schemas`       |    No    |   No   | Referenced schemas not dereferenced |
+| `/req/types-schemas/single-feature-schema` |   Yes    |  Yes   |                                     |
+| `/req/profiles/rfc7946`                    |    No    |   No   | Profile negotiation (API layer)     |
+| `/req/profiles/jsonfg`                     |    No    |   No   | Profile negotiation (API layer)     |
+| `/req/profiles/jsonfg-plus`                |    No    |   No   | Profile negotiation (API layer)     |
+| `/req/api/profile-parameter`               |    No    |   No   | Web API behavior, not a document    |
 
 ### OGC API - Features - Part 1: Core
 
