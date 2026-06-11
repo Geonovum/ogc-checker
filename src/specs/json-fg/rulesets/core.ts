@@ -17,6 +17,12 @@ const core: RulesetDefinition = {
   documentationUrl: 'http://www.opengis.net/spec/json-fg-1/1.0/req/core',
   description: 'OGC Features and Geometries JSON - Part 1: Core - Requirements Class "Core"',
   rules: {
+    // Validate against the JSON Schema of a JSON-FG root object. We deliberately hand-roll the
+    // discriminator + per-type `oneOf` here rather than `$ref`-ing the official
+    // `jsonfg-root-object.json`: that schema uses a plain (non-discriminated) `oneOf`, so AJV emits
+    // ~8 generic violations for any structural error (e.g. a feature missing `geometry` is reported
+    // as also missing coordinates/geometries/base/prisms/...). The `type` discriminator routes to
+    // the matching branch and yields a single precise violation.
     '/req/core/schema-valid': {
       given: '$',
       message: 'The JSON object SHALL validate against the JSON Schema of a JSON-FG root object. {{error}}.',
@@ -317,9 +323,9 @@ const core: RulesetDefinition = {
         functionOptions: { x: [-180, 180], y: [-90, 90] },
       },
     },
-    '/req/core/place': {
+    '/req/core/place-geometries': {
       given: '$..place',
-      documentationUrl: JSON_FG_CORE_DOC_URI + 'place',
+      documentationUrl: JSON_FG_CORE_DOC_URI + 'place-geometries',
       severity: 'error',
       then: {
         function: isValidPlaceCrs,

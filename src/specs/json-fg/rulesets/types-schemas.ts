@@ -1,5 +1,6 @@
 import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 import { schema } from '@geonovum/standards-checker/spectral/functions';
+import { hasSingleFeatureSchema } from '../functions/hasSingleFeatureSchema';
 import { isValidGeometryDimension } from '../functions/isValidGeometryDimension';
 import { remoteSchema } from '@geonovum/standards-checker';
 
@@ -99,6 +100,14 @@ const typesSchemas: RulesetDefinition = {
       severity: 'error',
       then: {
         function: isValidGeometryDimension,
+      },
+    },
+    '/req/types-schemas/single-feature-schema': {
+      given: '$',
+      documentationUrl: JSON_FG_TYPES_SCHEMAS_DOC_URI + 'single-feature-schema',
+      severity: 'error',
+      then: {
+        function: hasSingleFeatureSchema,
       },
     },
   },
