@@ -39,7 +39,7 @@
     "react-router-dom": "^7.18.0"
   },
   "devDependencies": {
-    "@types/luxon": "^3.7.1",
+    "@types/luxon": "^3.7.2",
     "@types/ramda": "^0.31.1",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
