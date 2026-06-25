@@ -6,7 +6,7 @@ import { truthy } from '@geonovum/standards-checker/spectral/functions';
 
 export const OGC_API_PROCESSES_CORE_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core';
 
-export const OGC_API_PROCESSES_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/18-062r3.html#/req_core_';
+export const OGC_API_PROCESSES_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/18-062r3.html#req_core_';
 
 export const SCHEMAS_URI_PREFIX = 'https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/master/openapi/schemas/';
 
