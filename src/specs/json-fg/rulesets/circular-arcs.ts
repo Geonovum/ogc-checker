@@ -30,12 +30,14 @@ const circularArcs: RulesetDefinition = {
             if: {
               anyOf: [
                 {
-                  required: ['type'],
+                  required: ['type', 'place'],
                   properties: {
                     type: {
                       const: 'Feature',
                     },
                     place: {
+                      type: 'object',
+                      required: ['type'],
                       properties: {
                         type: {
                           enum: CIRCULAR_ARC_TYPES,
@@ -52,8 +54,11 @@ const circularArcs: RulesetDefinition = {
                     },
                     features: {
                       contains: {
+                        required: ['place'],
                         properties: {
                           place: {
+                            type: 'object',
+                            required: ['type'],
                             properties: {
                               type: {
                                 enum: CIRCULAR_ARC_TYPES,

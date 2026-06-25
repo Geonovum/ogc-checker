@@ -21,6 +21,17 @@ describe('/req/circular-arcs/metadata', () => {
     expect(violations).toHaveLength(0);
   });
 
+  test('Succeeds when a feature collection has a place-less feature and no circular arc geometry (regression: absent "place" must not trip the rule)', async () => {
+    const { place: _omitted, ...placelessFeature } = featureCollectionDoc.features[0];
+
+    const violations = await spectral.run({
+      ...featureCollectionDoc,
+      features: [placelessFeature, ...featureCollectionDoc.features.slice(1)],
+    });
+
+    expect(violations.filter(v => v.code === '/req/circular-arcs/metadata')).toHaveLength(0);
+  });
+
   test('Fails when a feature place has type "CircularString" and does not include the Circular Arcs conformance class', async () => {
     const violations = await spectral.run({
       ...featureDoc,
