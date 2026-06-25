@@ -25,6 +25,10 @@ const typesSchemas: RulesetDefinition = {
                 { required: ['featureType'] },
                 { required: ['featureSchema'] },
                 {
+                  // `required: ['features']` is essential: without it `properties` is vacuously
+                  // satisfied when `features` is absent (e.g. a standalone geometry root object),
+                  // which would make this branch — and thus the whole `if` — match every document.
+                  required: ['features'],
                   properties: {
                     features: {
                       contains: {
@@ -55,41 +59,53 @@ const typesSchemas: RulesetDefinition = {
       then: {
         function: remoteSchema,
         functionOptions: {
+          // The "Feature Types and Schemas" requirements only constrain features. Gate the
+          // discriminated schema behind an `if` on the root `type` so a standalone geometry root
+          // object (e.g. type "MultiCurve") is ignored rather than failing the Feature/
+          // FeatureCollection discriminator.
           schema: {
-            type: 'object',
-            discriminator: { propertyName: 'type' },
-            oneOf: [
-              {
-                required: ['type', 'featureType'],
-                properties: {
-                  type: {
-                    const: 'Feature',
-                  },
-                },
+            if: {
+              required: ['type'],
+              properties: {
+                type: { enum: ['Feature', 'FeatureCollection'] },
               },
-              {
-                required: ['type'],
-                properties: {
-                  type: {
-                    const: 'FeatureCollection',
+            },
+            then: {
+              type: 'object',
+              discriminator: { propertyName: 'type' },
+              oneOf: [
+                {
+                  required: ['type', 'featureType'],
+                  properties: {
+                    type: {
+                      const: 'Feature',
+                    },
                   },
                 },
-                oneOf: [
-                  { required: ['featureType'] },
-                  {
-                    properties: {
-                      features: {
-                        type: 'array',
-                        items: {
-                          type: 'object',
-                          required: ['featureType'],
+                {
+                  required: ['type'],
+                  properties: {
+                    type: {
+                      const: 'FeatureCollection',
+                    },
+                  },
+                  oneOf: [
+                    { required: ['featureType'] },
+                    {
+                      properties: {
+                        features: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            required: ['featureType'],
+                          },
                         },
                       },
                     },
-                  },
-                ],
-              },
-            ],
+                  ],
+                },
+              ],
+            },
           },
         },
       },
