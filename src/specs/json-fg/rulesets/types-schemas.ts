@@ -16,6 +16,7 @@ const typesSchemas: RulesetDefinition = {
       given: '$',
       documentationUrl: JSON_FG_TYPES_SCHEMAS_DOC_URI + 'metadata',
       severity: 'error',
+      message: `The "conformsTo" member of a JSON-FG root object that contains a "featureType" or "featureSchema" member (on the root object or any feature) SHALL include the value "${JSON_FG_TYPES_SCHEMAS_URI}".`,
       then: {
         function: schema,
         functionOptions: {
