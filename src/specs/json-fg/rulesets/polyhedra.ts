@@ -25,12 +25,14 @@ const polyhedra: RulesetDefinition = {
             if: {
               anyOf: [
                 {
-                  required: ['type'],
+                  required: ['type', 'place'],
                   properties: {
                     type: {
                       const: 'Feature',
                     },
                     place: {
+                      type: 'object',
+                      required: ['type'],
                       properties: {
                         type: {
                           enum: POLYHEDRON_TYPES,
@@ -47,8 +49,11 @@ const polyhedra: RulesetDefinition = {
                     },
                     features: {
                       contains: {
+                        required: ['place'],
                         properties: {
                           place: {
+                            type: 'object',
+                            required: ['type'],
                             properties: {
                               type: {
                                 enum: POLYHEDRON_TYPES,

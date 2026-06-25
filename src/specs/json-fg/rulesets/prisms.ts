@@ -26,12 +26,14 @@ const prisms: RulesetDefinition = {
             if: {
               anyOf: [
                 {
-                  required: ['type'],
+                  required: ['type', 'place'],
                   properties: {
                     type: {
                       const: 'Feature',
                     },
                     place: {
+                      type: 'object',
+                      required: ['type'],
                       properties: {
                         type: {
                           enum: PRISM_TYPES,
@@ -48,8 +50,11 @@ const prisms: RulesetDefinition = {
                     },
                     features: {
                       contains: {
+                        required: ['place'],
                         properties: {
                           place: {
+                            type: 'object',
+                            required: ['type'],
                             properties: {
                               type: {
                                 enum: PRISM_TYPES,
