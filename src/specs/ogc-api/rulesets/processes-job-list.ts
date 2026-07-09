@@ -3,12 +3,12 @@ import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/cor
 import { oas3_0 } from './formats';
 import { truthy } from '@geonovum/standards-checker/spectral/functions';
 
-export const OGC_API_PROCESSES_JOB_LIST_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/job-list';
+export const OGC_API_PROCESSES_JOB_LIST_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/2.0/conf/job-list';
 
 export const OGC_API_PROCESSES_JOB_LIST_DOC_URI = 'https://docs.ogc.org/DRAFTS/18-062r3.html#req_job-list_';
 
 const processesJobList: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/req/job-list',
+  documentationUrl: 'http://www.opengis.net/spec/ogcapi-processes-1/2.0/req/job-list',
   description: 'OGC API - Processes - Part 1: Core - Requirements Class "Job list"',
   formats: [oas3_0],
   rules: {

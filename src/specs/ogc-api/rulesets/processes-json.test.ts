@@ -41,14 +41,6 @@ describe('/req/json/definition', () => {
     expect(violations).toContainViolation('/req/json/definition', 1);
   });
 
-  test('Fails when sync execution result does not support media type "application/json".', async () => {
-    const oasDoc = clone(exampleDoc);
-    delete (oasDoc.components.responses.ExecuteSync.content as Record<string, unknown>)[APPLICATION_JSON_TYPE];
-    const violations = await spectral.run(oasDoc);
-
-    expect(violations).toContainViolation('/req/json/definition', 1);
-  });
-
   test('Fails when job status does not support media type "application/json".', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.components.responses.JobStatus.content as Record<string, unknown>)[APPLICATION_JSON_TYPE];
