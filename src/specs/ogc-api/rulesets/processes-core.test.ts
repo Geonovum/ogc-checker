@@ -169,13 +169,13 @@ describe('/req/core/process-description-success', () => {
   });
 });
 
-describe('/req/core/process-exception/no-such-process', () => {
+describe('/req/core/process-exception-no-such-process', () => {
   test('Fails when process description 404 response is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths['/processes/{processID}'].get.responses as Record<string, unknown>)['404'];
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/process-exception/no-such-process', 1);
+    expect(violations).toContainViolation('/req/core/process-exception-no-such-process', 1);
   });
 
   test('Fails when process description 404 response schema is invalid', async () => {
@@ -192,7 +192,7 @@ describe('/req/core/process-exception/no-such-process', () => {
 
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/process-exception/no-such-process', 1);
+    expect(violations).toContainViolation('/req/core/process-exception-no-such-process', 1);
   });
 });
 
@@ -389,6 +389,24 @@ describe('/req/core/job-result-op', () => {
   });
 });
 
+describe('/req/core/job-result-op-0th', () => {
+  test('Fails when the 0th job result path is absent', async () => {
+    const oasDoc = clone(exampleDoc);
+    delete (oasDoc.paths as Record<string, unknown>)['/jobs/{jobID}/results/{outputID}/0'];
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/job-result-op-0th', 1);
+  });
+
+  test('Fails when the 0th job result GET operation is absent', async () => {
+    const oasDoc = clone(exampleDoc);
+    delete (oasDoc.paths['/jobs/{jobID}/results/{outputID}/0'] as Record<string, unknown>).get;
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/job-result-op-0th#get', 1);
+  });
+});
+
 describe('/req/core/job-results-async-one', () => {
   test('Fails when 200 response is absent', async () => {
     const oasDoc = clone(exampleDoc);
@@ -409,22 +427,32 @@ describe('/req/core/job-results-async-many', () => {
   });
 });
 
-describe('/req/core/job-results-exception/invalid-query-parameter-value', () => {
+describe('/req/core/job-results-exception-invalid-query-parameter-value', () => {
   test('Fails when 400 response is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths['/jobs/{jobID}/results'].get.responses as Record<string, unknown>)['400'];
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/job-results-exception/invalid-query-parameter-value', 1);
+    expect(violations).toContainViolation('/req/core/job-results-exception-invalid-query-parameter-value', 1);
   });
 });
 
-describe('/req/core/job-results-exception/no-such-job', () => {
+describe('/req/core/job-results-exception-no-such-output', () => {
+  test('Fails when 400 response is absent', async () => {
+    const oasDoc = clone(exampleDoc);
+    delete (oasDoc.paths['/jobs/{jobID}/results'].get.responses as Record<string, unknown>)['400'];
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/core/job-results-exception-no-such-output', 1);
+  });
+});
+
+describe('/req/core/job-results-exception-no-such-job', () => {
   test('Fails when 404 response is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths['/jobs/{jobID}/results'].get.responses as Record<string, unknown>)['404'];
     const violations = await spectral.run(oasDoc);
 
-    expect(violations).toContainViolation('/req/core/job-results-exception/no-such-job', 1);
+    expect(violations).toContainViolation('/req/core/job-results-exception-no-such-job', 1);
   });
 });

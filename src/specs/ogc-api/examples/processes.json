@@ -250,6 +250,32 @@
           }
         }
       }
+    },
+    "/jobs/{jobID}/results/{outputID}/0": {
+      "get": {
+        "summary": "retrieve the first value of a single result of a job",
+        "description": "Retrieves the first (0th) value of a single output of a job.",
+        "operationId": "getResultOutputValue",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/jobID"
+          },
+          {
+            "$ref": "#/components/parameters/outputID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/JobResult"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1049,6 +1075,7 @@
         "additionalProperties": false
       },
       "results": {
+        "type": "object",
         "additionalProperties": {
           "$ref": "#/components/schemas/inlineOrRefData"
         }

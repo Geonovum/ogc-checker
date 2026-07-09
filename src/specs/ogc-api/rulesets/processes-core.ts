@@ -4,14 +4,16 @@ import type { IFunctionResult, RulesetDefinition } from '@geonovum/standards-che
 import { oas3_0 } from './formats';
 import { truthy } from '@geonovum/standards-checker/spectral/functions';
 
-export const OGC_API_PROCESSES_CORE_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core';
+export const OGC_API_PROCESSES_CORE_URI = 'http://www.opengis.net/spec/ogcapi-processes-1/2.0/conf/core';
 
 export const OGC_API_PROCESSES_CORE_DOC_URI = 'https://docs.ogc.org/DRAFTS/18-062r3.html#req_core_';
 
+// The v2.0 schemas are not yet published under https://schemas.opengis.net/ogcapi/processes/part1/2.0/
+// (18-062r3 is still a draft), so the `master` branch — which tracks the 2.0 revision — is the live source.
 export const SCHEMAS_URI_PREFIX = 'https://raw.githubusercontent.com/opengeospatial/ogcapi-processes/master/openapi/schemas/';
 
 const processesCore: RulesetDefinition = {
-  documentationUrl: 'http://www.opengis.net/spec/ogcapi-processes-1/1.0/req/core',
+  documentationUrl: 'http://www.opengis.net/spec/ogcapi-processes-1/2.0/req/core',
   description: 'OGC API - Processes - Part 1: Core - Requirements Class "Core"',
   formats: [oas3_0],
   rules: {
@@ -167,7 +169,7 @@ const processesCore: RulesetDefinition = {
         function: truthy,
       },
     },
-    '/req/core/process-exception/no-such-process': {
+    '/req/core/process-exception-no-such-process': {
       given: '$.paths[?(@property.match(/^\\/processes\\/[^/]+$/))].get.responses',
       message: 'If the operation is executed using an invalid process identifier, the response SHALL be HTTP status code `404`.',
       documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'process-exception-no-such-process',
@@ -401,6 +403,28 @@ const processesCore: RulesetDefinition = {
         function: truthy,
       },
     },
+    '/req/core/job-result-op-0th': {
+      given: '$.paths',
+      message: 'The server SHALL support the HTTP GET operation at the path `/jobs/{jobID}/results/{outputID}/0`.',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-result-op-0th',
+      severity: 'error',
+      then: {
+        function: hasPathMatch,
+        functionOptions: {
+          pattern: '^\\/jobs\\/[^/]+\\/results\\/[^/]+\\/0$',
+        },
+      },
+    },
+    '/req/core/job-result-op-0th#get': {
+      given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results\\/[^/]+\\/0$/))]',
+      message: 'The server SHALL support the HTTP GET operation at the path `/jobs/{jobID}/results/{outputID}/0`.',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-result-op-0th',
+      severity: 'error',
+      then: {
+        field: 'get',
+        function: truthy,
+      },
+    },
     '/req/core/job-results-async-one': {
       given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results\\/[^/]+$/))].get.responses',
       message: 'A successful retrieval of a single result SHALL be reported with HTTP status code `200`.',
@@ -430,10 +454,10 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/job-results-exception/invalid-query-parameter-value': {
+    '/req/core/job-results-exception-invalid-query-parameter-value': {
       given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get.responses',
       message: 'If a query parameter has an invalid value, the response SHALL have HTTP status code `400`. {{error}}',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception-invalid-query-parameter-value',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception_invalid-query-parameter-value',
       severity: 'error',
       then: [
         {
@@ -449,7 +473,27 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/job-results-exception/no-such-job': {
+    '/req/core/job-results-exception-no-such-output': {
+      given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get.responses',
+      message:
+        'If the operation requests an output identifier that does not exist, the response SHALL have HTTP status code `400`. {{error}}',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception-no-such-output',
+      severity: 'error',
+      then: [
+        {
+          field: '400',
+          function: truthy,
+        },
+        {
+          field: '400',
+          function: hasSchemaMatch,
+          functionOptions: {
+            schemaUri: SCHEMAS_URI_PREFIX + 'common-core/exception.yaml',
+          },
+        },
+      ],
+    },
+    '/req/core/job-results-exception-no-such-job': {
       given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get.responses',
       message: 'If the job identifier is invalid, the response SHALL have HTTP status code `404`. {{error}}',
       documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception-no-such-job',
@@ -468,10 +512,10 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/job-results-exception/results-not-ready': {
+    '/req/core/job-results-exception-results-not-ready': {
       given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get.responses',
       message: 'If the job is still running, the response SHALL have HTTP status code `404`. {{error}}',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception-results-not-ready',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception_results-not-ready',
       severity: 'error',
       then: [
         {
@@ -487,10 +531,10 @@ const processesCore: RulesetDefinition = {
         },
       ],
     },
-    '/req/core/job-results-exception/results-not-available': {
+    '/req/core/job-results-exception-results-not-available': {
       given: '$.paths[?(@property.match(/^\\/jobs\\/[^/]+\\/results$/))].get.responses',
       message: 'If no outputs are available, the response SHALL have HTTP status code `404`. {{error}}',
-      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception-results-not-available',
+      documentationUrl: OGC_API_PROCESSES_CORE_DOC_URI + 'job-results-exception_results-not-available',
       severity: 'error',
       then: [
         {
