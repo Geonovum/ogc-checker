@@ -1,6 +1,6 @@
 {
   "name": "@geonovum/ogc-checker",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "packageManager": "pnpm@10.33.0",
   "license": "EUPL-1.2",
   "repository": {
@@ -47,5 +47,13 @@
     "typescript": "^6.0.3",
     "vite": "^8.1.4",
     "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "@asyncapi/specs": "6.11.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@asyncapi/specs": "6.11.1"
+    }
   }
 }
