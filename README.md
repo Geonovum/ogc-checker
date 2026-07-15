@@ -6,6 +6,8 @@ Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
 Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker); see its documentation for the validation engine, CLI toolkit, and web UI framework.
 
+Release notes are in [`CHANGELOG.md`](CHANGELOG.md); see [Versioning & releasing](#versioning--releasing) for how it is produced.
+
 **Demo:** https://geonovum.github.io/ogc-checker/
 
 ## CLI
@@ -14,20 +16,20 @@ Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-c
 
 ```bash
 # From a local file
-npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input ./data/spec.json
+npx @geonovum/ogc-checker@latest validate --standard json-fg --input ./data/spec.json
 
 # From a URL
-npx @geonovum/ogc-checker@latest validate --ruleset json-fg --input https://example.com/spec.json
+npx @geonovum/ogc-checker@latest validate --standard json-fg --input https://example.com/spec.json
 
 # From stdin
-cat spec.json | npx @geonovum/ogc-checker@latest validate --ruleset json-fg
+cat spec.json | npx @geonovum/ogc-checker@latest validate --standard json-fg
 ```
 
 ### Install globally
 
 ```bash
 npm install -g @geonovum/ogc-checker@latest
-ogc-checker validate --ruleset json-fg --input ./data/spec.json
+ogc-checker validate --standard json-fg --input ./data/spec.json
 ```
 
 ### From a local clone
@@ -35,23 +37,40 @@ ogc-checker validate --ruleset json-fg --input ./data/spec.json
 ```bash
 pnpm install
 pnpm build:cli
-node dist/cli.mjs validate --ruleset json-fg --input ./data/spec.json
+node dist/cli.mjs validate --standard json-fg --input ./data/spec.json
 ```
 
-Available rulesets: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`.
+Available standards: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`. Each currently
+ships a single version, so `--version` is optional and defaults to it (`ogc-api-processes` is `2.0`, a draft).
+
+The old `--ruleset <slug>` flag still works as a **deprecated** alias (it prints a warning on stderr and
+resolves the old slug to the same standard/version): `--ruleset json-fg` == `--standard json-fg --version 1.0`.
 
 ### CLI flags
 
-| Flag                | Description                               | Default      |
-| ------------------- | ----------------------------------------- | ------------ |
-| `--ruleset <name>`  | Ruleset to run (listed in `--help`)       | _(required)_ |
-| `--input <file\|->` | Input file, URL, or `-` for stdin         | `-`          |
-| `--format <fmt>`    | Output: `table`, `json`                   | `table`      |
-| `--fail-on <level>` | Exit code policy: `none`, `warn`, `error` | `error`      |
+| Flag                | Description                                       | Default            |
+| ------------------- | ------------------------------------------------- | ------------------ |
+| `--standard <slug>` | Standard to validate against                      | _(required)_       |
+| `--version <id>`    | Version of the standard                           | latest final       |
+| `--ruleset <slug>`  | **Deprecated** alias for `--standard`/`--version` | —                  |
+| `--input <file\|->` | Input file, URL, or `-` for stdin                 | `-`                |
+| `--format <fmt>`    | Output: `table`, `json`                           | `table`            |
+| `--fail-on <level>` | Exit code policy: `none`, `warn`, `error`         | `error`            |
 
 Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected error.
 
 ## Specifications
+
+Each specification below maps to a **standard** in the checker; its requirement table lists the
+conformance classes of that standard's current version. Pick the standard in the header, then the
+version:
+
+| Standard (`--standard`) | Version (`--version`) | Status | Covers                                                    |
+| ----------------------- | --------------------- | ------ | --------------------------------------------------------- |
+| `json-fg`               | `1.0.0`               | final  | JSON-FG                                                   |
+| `ogc-api-features`      | `1.0.1`               | final  | OGC API - Features Part 1 (Core) and Part 2 (CRS by ref.) |
+| `ogc-api-processes`     | `2.0.0`               | draft  | OGC API - Processes Part 1 (Core)                         |
+| `ogc-api-records`       | `1.0.0`               | final  | OGC API - Records Part 1 (Core)                           |
 
 ### JSON-FG
 
@@ -277,19 +296,25 @@ pnpm install
 Run a single test file:
 
 ```bash
-npx vitest run src/specs/json-fg/rulesets/core.test.ts
+npx vitest run src/standards/json-fg/rulesets/core.test.ts
 ```
 
-### Publishing
+### Versioning & releasing
 
-Published to npm automatically when a version tag is pushed:
+Versioning, the changelog, and publishing are driven by [Changesets](https://changesets.dev/). Describing a change is decoupled from cutting a release:
 
-```bash
-git tag v1.0.0
-git push --tags
-```
+1. **Add a changeset with your change.** Run `pnpm changeset`, pick the bump (`major` / `minor` / `patch`), and write a one-line summary. This creates a `.changeset/<name>.md` file — commit it with your PR. Omit only for changes that don't affect the published package (CI, internal docs, tests).
 
-This triggers the CI workflow that builds, tests, publishes to npm, and deploys to GitHub Pages.
+2. **Cut the release.** Run `pnpm version-packages` (alias for `changeset version`). It consumes the pending `.changeset/*.md` files, bumps `package.json`, and prepends the summaries to `CHANGELOG.md`. Review and commit the result. Don't hand-edit the `version` field — Changesets owns it.
+
+3. **Publish.** Tag the released version and push; the CI workflow verifies `package.json` matches the tag, builds, tests, publishes to npm, and deploys to GitHub Pages:
+
+   ```bash
+   git tag v1.1.0
+   git push --tags
+   ```
+
+   `pnpm release` (`pnpm build && changeset publish`) publishes to npm locally if you need to bypass the workflow (it does not deploy Pages).
 
 ## License
 
