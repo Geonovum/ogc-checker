@@ -48,9 +48,15 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Deploy the web UI to GitHub Pages only for final releases — a
+      # prerelease tag (any version containing a `-`) publishes to npm under
+      # the `beta` dist-tag but must not overwrite the live site.
       - uses: actions/configure-pages@v6
+        if: ${{ !contains(github.ref_name, '-') }}
       - uses: actions/upload-pages-artifact@v5
+        if: ${{ !contains(github.ref_name, '-') }}
         with:
           path: docs
       - uses: actions/deploy-pages@v5
+        if: ${{ !contains(github.ref_name, '-') }}
         id: deployment
