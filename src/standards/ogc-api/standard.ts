@@ -7,9 +7,10 @@ import {
   type VersionResponseMapper,
 } from '@geonovum/standards-checker';
 import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
-import featuresExample from './examples/features.json';
-import processesExample from './examples/processes.json';
-import recordsExample from './examples/records.json';
+// Examples are imported as raw text (`?raw`) and appear verbatim in the editor.
+import featuresExample from './examples/features.json?raw';
+import processesExample from './examples/processes.json?raw';
+import recordsExample from './examples/records.json?raw';
 import rulesets from './rulesets';
 
 const sourceLabel = (confClass: string) => confClass.replace('http://www.opengis.net/spec/', '');
@@ -84,7 +85,7 @@ export const ogcApiFeaturesStandard: Standard = {
       id: '1.0.1',
       label: '1.0.1',
       status: 'final',
-      example: JSON.stringify(featuresExample, undefined, 2),
+      example: featuresExample,
       rulesets: featuresRulesets,
       sourceLabel,
       responseMapper: responseMapper(featuresRulesets),
@@ -101,7 +102,7 @@ export const ogcApiProcessesStandard: Standard = {
       id: '2.0.0',
       label: '2.0.0',
       status: 'draft',
-      example: JSON.stringify(processesExample, undefined, 2),
+      example: processesExample,
       rulesets: processesRulesets,
       sourceLabel,
       responseMapper: responseMapper(processesRulesets),
@@ -118,7 +119,7 @@ export const ogcApiRecordsStandard: Standard = {
       id: '1.0.0',
       label: '1.0.0',
       status: 'final',
-      example: JSON.stringify(recordsExample, undefined, 2),
+      example: recordsExample,
       rulesets: recordsRulesets,
       sourceLabel,
       responseMapper: responseMapper(recordsRulesets),
