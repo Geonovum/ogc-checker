@@ -37,6 +37,7 @@ jobs:
             exit 1
           fi
       - run: pnpm install --frozen-lockfile
+      - run: pnpm dedupe --check
       - run: pnpm build
       - run: |
           VERSION=$(node -p "require('./package.json').version")
