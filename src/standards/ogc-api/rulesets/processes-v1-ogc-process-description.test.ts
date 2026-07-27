@@ -1,8 +1,8 @@
 import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone } from 'ramda';
 import { describe, expect, test } from 'vitest';
-import exampleDoc from '../examples/processes.json';
-import ruleset from './processes-ogc-process-description';
+import exampleDoc from '../examples/processes-1.0.json';
+import ruleset from './processes-v1-ogc-process-description';
 
 const spectral = new Spectral();
 spectral.setRuleset(ruleset);

@@ -40,22 +40,28 @@ pnpm build:cli
 node dist/cli.mjs validate --standard json-fg --input ./data/spec.json
 ```
 
-Available standards: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`. Each currently
-ships a single version, so `--version` is optional and defaults to it (`ogc-api-processes` is `2.0`, a draft).
+Available standards: `json-fg`, `ogc-api-features`, `ogc-api-processes`, `ogc-api-records`. `--version` is
+optional and defaults to the latest final version of the standard. Only `ogc-api-processes` ships more
+than one version — it defaults to the approved `1.0.0`, and the `2.0.0` draft is opt-in:
+
+```bash
+ogc-checker validate --standard ogc-api-processes --input ./openapi.json                  # 1.0.0
+ogc-checker validate --standard ogc-api-processes --version 2.0.0 --input ./openapi.json  # 2.0.0 draft
+```
 
 The old `--ruleset <slug>` flag still works as a **deprecated** alias (it prints a warning on stderr and
 resolves the old slug to the same standard/version): `--ruleset json-fg` == `--standard json-fg --version 1.0`.
 
 ### CLI flags
 
-| Flag                | Description                                       | Default            |
-| ------------------- | ------------------------------------------------- | ------------------ |
-| `--standard <slug>` | Standard to validate against                      | _(required)_       |
-| `--version <id>`    | Version of the standard                           | latest final       |
-| `--ruleset <slug>`  | **Deprecated** alias for `--standard`/`--version` | —                  |
-| `--input <file\|->` | Input file, URL, or `-` for stdin                 | `-`                |
-| `--format <fmt>`    | Output: `table`, `json`                           | `table`            |
-| `--fail-on <level>` | Exit code policy: `none`, `warn`, `error`         | `error`            |
+| Flag                | Description                                       | Default      |
+| ------------------- | ------------------------------------------------- | ------------ |
+| `--standard <slug>` | Standard to validate against                      | _(required)_ |
+| `--version <id>`    | Version of the standard                           | latest final |
+| `--ruleset <slug>`  | **Deprecated** alias for `--standard`/`--version` | —            |
+| `--input <file\|->` | Input file, URL, or `-` for stdin                 | `-`          |
+| `--format <fmt>`    | Output: `table`, `json`                           | `table`      |
+| `--fail-on <level>` | Exit code policy: `none`, `warn`, `error`         | `error`      |
 
 Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected error.
 
@@ -65,12 +71,13 @@ Each specification below maps to a **standard** in the checker; its requirement 
 conformance classes of that standard's current version. Pick the standard in the header, then the
 version:
 
-| Standard (`--standard`) | Version (`--version`) | Status | Covers                                                    |
-| ----------------------- | --------------------- | ------ | --------------------------------------------------------- |
-| `json-fg`               | `1.0.0`               | final  | JSON-FG                                                   |
-| `ogc-api-features`      | `1.0.1`               | final  | OGC API - Features Part 1 (Core) and Part 2 (CRS by ref.) |
-| `ogc-api-processes`     | `2.0.0`               | draft  | OGC API - Processes Part 1 (Core)                         |
-| `ogc-api-records`       | `1.0.0`               | final  | OGC API - Records Part 1 (Core)                           |
+| Standard (`--standard`) | Version (`--version`) | Status          | Covers                                                    |
+| ----------------------- | --------------------- | --------------- | --------------------------------------------------------- |
+| `json-fg`               | `1.0.0`               | final           | JSON-FG                                                   |
+| `ogc-api-features`      | `1.0.1`               | final           | OGC API - Features Part 1 (Core) and Part 2 (CRS by ref.) |
+| `ogc-api-processes`     | `1.0.0`               | final (default) | OGC API - Processes Part 1 (Core)                         |
+| `ogc-api-processes`     | `2.0.0`               | draft           | OGC API - Processes Part 1 (Core)                         |
+| `ogc-api-records`       | `1.0.0`               | final           | OGC API - Records Part 1 (Core)                           |
 
 ### JSON-FG
 
@@ -159,6 +166,93 @@ Version: 1.0.1 — [Specification](https://docs.ogc.org/is/18-058r1/18-058r1.htm
 | `/req/crs/ogc-crs-header-value`           |    No    |   No   |                                               |
 
 ### OGC API - Processes - Part 1: Core
+
+Version: 1.0.0 — [Specification](https://docs.ogc.org/is/18-062r2/18-062r2.html)
+
+| Requirement                                         | Testable | Tested | Remarks                                        |
+| --------------------------------------------------- | :------: | :----: | ---------------------------------------------- |
+| `/req/core/landingpage-op`                          |   Yes    |  Yes   |                                                |
+| `/req/core/landingpage-success`                     |   Yes    |  Yes   |                                                |
+| `/req/core/api-definition-op`                       |    No    |   No   |                                                |
+| `/req/core/api-definition-success`                  |    No    |   No   |                                                |
+| `/req/core/conformance-op`                          |   Yes    |  Yes   |                                                |
+| `/req/core/conformance-success`                     |   Yes    |  Yes   |                                                |
+| `/req/core/http`                                    |    No    |   No   |                                                |
+| `/req/core/process-list`                            |   Yes    |  Yes   |                                                |
+| `/req/core/pl-limit-definition`                     |   Yes    |  Yes   |                                                |
+| `/req/core/pl-limit-response`                       |    No    |   No   |                                                |
+| `/req/core/process-list-success`                    |   Yes    |  Yes   |                                                |
+| `/req/core/pl-links`                                |    No    |   No   |                                                |
+| `/req/core/process`                                 |   Yes    |  Yes   |                                                |
+| `/req/core/process-success`                         |   Yes    |  Yes   |                                                |
+| `/req/core/process-exception/no-such-process`       |   Yes    |  Yes   |                                                |
+| `/req/core/process-execute-op`                      |   Yes    |  Yes   |                                                |
+| `/req/core/process-execute-request`                 |   Yes    |  Yes   |                                                |
+| `/req/core/process-execute-inputs`                  |    No    |   No   |                                                |
+| `/req/core/process-execute-input-array`             |    No    |   No   |                                                |
+| `/req/core/process-execute-input-inline-object`     |    No    |   No   |                                                |
+| `/req/core/process-execute-input-mixed-type`        |    No    |   No   |                                                |
+| `/req/core/process-execute-input-inline-binary`     |    No    |   No   |                                                |
+| `/req/core/process-execute-input-validation`        |    No    |   No   |                                                |
+| `/req/core/process-execute-default-execution-mode`  |    No    |   No   |                                                |
+| `/req/core/process-execute-auto-execution-mode`     |    No    |   No   |                                                |
+| `/req/core/process-execute-default-outputs`         |    No    |   No   |                                                |
+| `/req/core/process-execute-sync-raw-value-one`      |   Yes    |  Yes   | Only the `200` response is statically checked  |
+| `/req/core/process-execute-sync-raw-value-multi`    |    No    |   No   |                                                |
+| `/req/core/process-execute-sync-raw-ref`            |    No    |   No   |                                                |
+| `/req/core/process-execute-sync-raw-mixed-multi`    |    No    |   No   |                                                |
+| `/req/core/process-execute-sync-document`           |   Yes    |  Yes   |                                                |
+| `/req/core/job-results-success-sync`                |    No    |   No   |                                                |
+| `/req/core/process-execute-success-async`           |   Yes    |  Yes   |                                                |
+| `/req/core/job`                                     |   Yes    |  Yes   |                                                |
+| `/req/core/job-success`                             |   Yes    |  Yes   |                                                |
+| `/req/core/job-exception-no-such-job`               |   Yes    |  Yes   |                                                |
+| `/req/core/job-results`                             |   Yes    |  Yes   |                                                |
+| `/req/core/job-results-async-raw-value-one`         |    No    |   No   |                                                |
+| `/req/core/job-results-async-raw-value-multi`       |    No    |   No   |                                                |
+| `/req/core/job-results-async-raw-mixed-multi`       |    No    |   No   |                                                |
+| `/req/core/job-results-async-raw-ref`               |    No    |   No   |                                                |
+| `/req/core/job-results-async-document`              |   Yes    |  Yes   |                                                |
+| `/req/core/job-results-exception/no-such-job`       |   Yes    |  Yes   |                                                |
+| `/req/core/job-results-exception/results-not-ready` |   Yes    |  Yes   |                                                |
+| `/req/core/job-results-failed`                      |   Yes    |  Yes   |                                                |
+| `/req/core/test-process`                            |    No    |   No   |                                                |
+| `/req/ogc-process-description/json-encoding`        |   Yes    |  Yes   |                                                |
+| `/req/ogc-process-description/inputs-def`           |    No    |   No   |                                                |
+| `/req/ogc-process-description/input-def`            |    No    |   No   |                                                |
+| `/req/ogc-process-description/input-binary`         |    No    |   No   |                                                |
+| `/req/ogc-process-description/input-mixed-type`     |    No    |   No   |                                                |
+| `/req/ogc-process-description/outputs-def`          |    No    |   No   |                                                |
+| `/req/ogc-process-description/output-def`           |    No    |   No   |                                                |
+| `/req/ogc-process-description/output-mixed-type`    |    No    |   No   |                                                |
+| `/req/json/definition`                              |   Yes    |  Yes   |                                                |
+| `/req/html/definition`                              |    No    |   No   |                                                |
+| `/req/html/content`                                 |    No    |   No   |                                                |
+| `/req/oas30/oas-definition-1`                       |    No    |   No   |                                                |
+| `/req/oas30/oas-definition-2`                       |    No    |   No   |                                                |
+| `/req/oas30/oas-impl`                               |    No    |   No   |                                                |
+| `/req/oas30/completeness`                           |    No    |   No   |                                                |
+| `/req/oas30/exceptions-codes`                       |    No    |   No   |                                                |
+| `/req/oas30/security`                               |    No    |   No   |                                                |
+| `/req/job-list/job-list-op`                         |   Yes    |  Yes   |                                                |
+| `/req/job-list/type-definition`                     |   Yes    |  Yes   |                                                |
+| `/req/job-list/type-response`                       |    No    |   No   |                                                |
+| `/req/job-list/processID-mandatory`                 |   Yes    |   No   |                                                |
+| `/req/job-list/processID-definition`                |   Yes    |  Yes   |                                                |
+| `/req/job-list/processid-response`                  |    No    |   No   |                                                |
+| `/req/job-list/status-definition`                   |   Yes    |  Yes   |                                                |
+| `/req/job-list/status-response`                     |    No    |   No   |                                                |
+| `/req/job-list/datetime-definition`                 |   Yes    |  Yes   |                                                |
+| `/req/job-list/datetime-response`                   |    No    |   No   |                                                |
+| `/req/job-list/duration-definition`                 |   Yes    |  Yes   | `minDuration`/`maxDuration` are integer arrays |
+| `/req/job-list/duration-response`                   |    No    |   No   | 18-062r2 misprints it as `status-response`     |
+| `/req/job-list/limit-definition`                    |   Yes    |  Yes   |                                                |
+| `/req/job-list/limit-response`                      |    No    |   No   |                                                |
+| `/req/job-list/job-list-success`                    |   Yes    |  Yes   |                                                |
+| `/req/job-list/links`                               |    No    |   No   |                                                |
+| `/req/callback/job-callback`                        |    No    |   No   |                                                |
+| `/req/dismiss/job-dismiss-op`                       |   Yes    |   No   |                                                |
+| `/req/dismiss/job-dismiss-success`                  |   Yes    |   No   |                                                |
 
 Version: 2.0 (Draft) — [Specification](https://docs.ogc.org/DRAFTS/18-062r3.html)
 

@@ -1,0 +1,1399 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "A sample API conforming to the standard OGC API - Processes - Part 1: Core",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Acme Corporation",
+      "email": "info@example.org",
+      "url": "http://example.org/"
+    },
+    "license": {
+      "name": "CC-BY 4.0 license",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://data.example.org/",
+      "description": "Production server"
+    },
+    {
+      "url": "https://dev.example.org/",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "getLandingPage",
+        "summary": "Retrieve the OGC API landing page for this service.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/f-metadata"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/LandingPage"
+          },
+          "406": {
+            "$ref": "#/components/responses/NotAcceptable"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/conformance": {
+      "get": {
+        "operationId": "getConformance",
+        "summary": "Retrieve the set of OGC API conformance classes that are supported by this service.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/f-metadata"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Conformance"
+          },
+          "406": {
+            "$ref": "#/components/responses/NotAcceptable"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/processes": {
+      "get": {
+        "summary": "retrieve the list of available processes",
+        "description": "The list of processes contains a summary of each process the OGC API - Processes offers, including the link to a more detailed description of the process.\n\nFor more information, see [Section 7.7]https://docs.ogc.org/is/18-062r2/18-062r2.html#sc_process_list).\n",
+        "operationId": "getProcesses",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProcessList"
+          }
+        }
+      }
+    },
+    "/processes/{processID}": {
+      "get": {
+        "summary": "retrieve a process description",
+        "description": "The process description contains information about inputs and outputs and a link to the execution-endpoint for the process. The Core does not mandate the use of a specific process description to specify the interface of a process. That said, the Core requirements class makes the following recommendation:\n\nImplementations SHOULD consider supporting the OGC process description.\n\nFor more information, see [Section 7.8](https://docs.ogc.org/is/18-062r2/18-062r2.html#sc_process_description).\n",
+        "operationId": "getProcessDescription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/processID-path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProcessDescription"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/processes/{processID}/execution": {
+      "post": {
+        "summary": "execute a process",
+        "description": "Executes a process (this may result in the creation of a job resource e.g., for _asynchronous execution_).\n\nFor more information, see [Section 7.9](https://docs.ogc.org/is/18-062r2/18-062r2.html#sc_create_job).\n",
+        "operationId": "postProcessExecution",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/processID-path"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Execute"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ExecuteSync"
+          },
+          "201": {
+            "$ref": "#/components/responses/ExecuteAsync"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "summary": "retrieve the list of jobs.",
+        "description": "Lists available jobs.\n\nFor more information, see [Section 12](https://docs.ogc.org/is/18-062r2/18-062r2.html#Job_list).\n",
+        "operationId": "getJobs",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/processID-query"
+          },
+          {
+            "$ref": "#/components/parameters/status"
+          },
+          {
+            "$ref": "#/components/parameters/minDuration"
+          },
+          {
+            "$ref": "#/components/parameters/maxDuration"
+          },
+          {
+            "$ref": "#/components/parameters/type"
+          },
+          {
+            "$ref": "#/components/parameters/datetime"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/JobList"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/jobs/{jobID}": {
+      "get": {
+        "summary": "retrieve the status of a job",
+        "description": "Shows the status of a job.\n\n For more information, see [Section 7.10](https://docs.ogc.org/is/18-062r2/18-062r2.html#sc_retrieve_status_info).\n",
+        "operationId": "getStatus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/JobStatus"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/jobs/{jobID}/results": {
+      "get": {
+        "summary": "retrieve the result(s) of a job",
+        "description": "Lists available results of a job. In case of a failure, lists exceptions instead.\n\nFor more information, see [Section 7.11](https://docs.ogc.org/is/18-062r2/18-062r2.html#sc_retrieve_job_results).\n",
+        "operationId": "getResult",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/jobID"
+          },
+          {
+            "in": "header",
+            "description": "Indicates client preferences, such as whether the client wishes a self-contained or minimal response.\nA `return=minimal` preference indicates that the client would prefer that links be returned to larger object to minimize the response payload.\nA `return=representation` indicates that the client would prefer if the server can return a self-contained response.",
+            "name": "Prefer",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/JobResults"
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidParameter"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "additionalParameter": {
+        "type": "object",
+        "required": [
+          "name",
+          "value"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "array",
+                  "items": {}
+                },
+                {
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "bbox": {
+        "type": "object",
+        "required": [
+          "bbox"
+        ],
+        "properties": {
+          "bbox": {
+            "type": "array",
+            "oneOf": [
+              {
+                "minItems": 4,
+                "maxItems": 4
+              },
+              {
+                "minItems": 6,
+                "maxItems": 6
+              }
+            ],
+            "items": {
+              "type": "number"
+            }
+          },
+          "crs": {
+            "type": "string",
+            "format": "uri",
+            "default": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+            "enum": [
+              "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+              "http://www.opengis.net/def/crs/OGC/0/CRS84h"
+            ]
+          }
+        }
+      },
+      "binaryInputValue": {
+        "type": "string",
+        "format": "byte"
+      },
+      "confClasses": {
+        "type": "object",
+        "required": [
+          "conformsTo"
+        ],
+        "properties": {
+          "conformsTo": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core"
+            }
+          }
+        }
+      },
+      "descriptionType": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/metadata"
+            }
+          },
+          "additionalParameters": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/metadata"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/additionalParameter"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "exception": {
+        "title": "Exception Schema",
+        "description": "JSON schema for exceptions based on RFC 7807",
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "execute": {
+        "type": "object",
+        "properties": {
+          "inputs": {
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/inlineOrRefData"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/inlineOrRefData"
+                  }
+                }
+              ]
+            }
+          },
+          "outputs": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/output"
+            }
+          },
+          "response": {
+            "type": "string",
+            "enum": [
+              "raw",
+              "document"
+            ],
+            "default": "raw"
+          },
+          "subscriber": {
+            "$ref": "#/components/schemas/subscriber"
+          }
+        }
+      },
+      "format": {
+        "type": "object",
+        "properties": {
+          "mediaType": {
+            "type": "string"
+          },
+          "encoding": {
+            "type": "string"
+          },
+          "schema": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "url"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      },
+      "inlineOrRefData": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/inputValueNoObject"
+          },
+          {
+            "$ref": "#/components/schemas/qualifiedInputValue"
+          },
+          {
+            "$ref": "#/components/schemas/link"
+          }
+        ]
+      },
+      "inputDescription": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/descriptionType"
+          },
+          {
+            "type": "object",
+            "required": [
+              "schema"
+            ],
+            "properties": {
+              "minOccurs": {
+                "type": "integer",
+                "default": 1
+              },
+              "maxOccurs": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "default": 1
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "unbounded"
+                    ]
+                  }
+                ]
+              },
+              "schema": {
+                "$ref": "#/components/schemas/schema"
+              }
+            }
+          }
+        ]
+      },
+      "inputValue": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/inputValueNoObject"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "inputValueNoObject": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "array"
+          },
+          {
+            "$ref": "#/components/schemas/binaryInputValue"
+          },
+          {
+            "$ref": "#/components/schemas/bbox"
+          }
+        ]
+      },
+      "jobControlOptions": {
+        "type": "string",
+        "enum": [
+          "sync-execute",
+          "async-execute",
+          "dismiss"
+        ]
+      },
+      "jobList": {
+        "type": "object",
+        "required": [
+          "jobs",
+          "links"
+        ],
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/statusInfo"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "landingPage": {
+        "type": "object",
+        "required": [
+          "links"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Example processing server"
+          },
+          "description": {
+            "type": "string",
+            "example": "Example server implementing the OGC API - Processes 1.0 Standard"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "link": {
+        "type": "object",
+        "required": [
+          "href"
+        ],
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "rel": {
+            "type": "string",
+            "example": "service"
+          },
+          "type": {
+            "type": "string",
+            "example": "application/json"
+          },
+          "hreflang": {
+            "type": "string",
+            "example": "en"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        }
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "$ref": "#/components/schemas/format"
+          },
+          "transmissionMode": {
+            "$ref": "#/components/schemas/transmissionMode"
+          }
+        }
+      },
+      "outputDescription": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/descriptionType"
+          },
+          {
+            "type": "object",
+            "required": [
+              "schema"
+            ],
+            "properties": {
+              "schema": {
+                "$ref": "#/components/schemas/schema"
+              }
+            }
+          }
+        ]
+      },
+      "process": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/processSummary"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "inputs": {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/inputDescription"
+                }
+              },
+              "outputs": {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/outputDescription"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "processList": {
+        "type": "object",
+        "required": [
+          "processes",
+          "links"
+        ],
+        "properties": {
+          "processes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/processSummary"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "processSummary": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/descriptionType"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "version"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "jobControlOptions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/jobControlOptions"
+                }
+              },
+              "outputTransmission": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/transmissionMode"
+                }
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/link"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "processes-list": {
+        "type": "string",
+        "enum": [
+          "RenderMap",
+          "ElevationContours",
+          "OSMERE"
+        ]
+      },
+      "qualifiedInputValue": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/format"
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/components/schemas/inputValue"
+              }
+            }
+          }
+        ]
+      },
+      "reference": {
+        "type": "object",
+        "required": [
+          "$ref"
+        ],
+        "properties": {
+          "$ref": {
+            "type": "string",
+            "format": "uri-reference"
+          }
+        }
+      },
+      "results": {
+        "additionalProperties": {
+          "$ref": "#/components/schemas/inlineOrRefData"
+        }
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "multipleOf": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true
+              },
+              "maximum": {
+                "type": "number"
+              },
+              "exclusiveMaximum": {
+                "type": "boolean",
+                "default": false
+              },
+              "minimum": {
+                "type": "number"
+              },
+              "exclusiveMinimum": {
+                "type": "boolean",
+                "default": false
+              },
+              "maxLength": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minLength": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0
+              },
+              "pattern": {
+                "type": "string",
+                "format": "regex"
+              },
+              "maxItems": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0
+              },
+              "uniqueItems": {
+                "type": "boolean",
+                "default": false
+              },
+              "maxProperties": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minProperties": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0
+              },
+              "required": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "enum": {
+                "type": "array",
+                "items": {},
+                "minItems": 1,
+                "uniqueItems": false
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "array",
+                  "boolean",
+                  "integer",
+                  "number",
+                  "object",
+                  "string"
+                ]
+              },
+              "not": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/schema"
+                  },
+                  {
+                    "$ref": "#/components/schemas/reference"
+                  }
+                ]
+              },
+              "allOf": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/schema"
+                    },
+                    {
+                      "$ref": "#/components/schemas/reference"
+                    }
+                  ]
+                }
+              },
+              "oneOf": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/schema"
+                    },
+                    {
+                      "$ref": "#/components/schemas/reference"
+                    }
+                  ]
+                }
+              },
+              "anyOf": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/schema"
+                    },
+                    {
+                      "$ref": "#/components/schemas/reference"
+                    }
+                  ]
+                }
+              },
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/schema"
+                  },
+                  {
+                    "$ref": "#/components/schemas/reference"
+                  }
+                ]
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/schema"
+                    },
+                    {
+                      "$ref": "#/components/schemas/reference"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/schema"
+                  },
+                  {
+                    "$ref": "#/components/schemas/reference"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ],
+                "default": true
+              },
+              "description": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string"
+              },
+              "default": {},
+              "nullable": {
+                "type": "boolean",
+                "default": false
+              },
+              "readOnly": {
+                "type": "boolean",
+                "default": false
+              },
+              "writeOnly": {
+                "type": "boolean",
+                "default": false
+              },
+              "example": {},
+              "deprecated": {
+                "type": "boolean",
+                "default": false
+              },
+              "contentMediaType": {
+                "type": "string"
+              },
+              "contentEncoding": {
+                "type": "string"
+              },
+              "contentSchema": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "statusCode": {
+        "type": "string",
+        "nullable": false,
+        "enum": [
+          "accepted",
+          "running",
+          "successful",
+          "failed",
+          "dismissed"
+        ]
+      },
+      "statusInfo": {
+        "type": "object",
+        "required": [
+          "jobID",
+          "status",
+          "type"
+        ],
+        "properties": {
+          "processID": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "process"
+            ]
+          },
+          "jobID": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/statusCode"
+          },
+          "message": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "started": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finished": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "progress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "subscriber": {
+        "description": "Optional URIs for callbacks for this job.\n\nSupport for this parameter is not required and the parameter may be\nremoved from the API definition, if conformance class **'callback'**\nis not listed in the conformance declaration under `/conformance`.",
+        "type": "object",
+        "required": [
+          "successUrl"
+        ],
+        "properties": {
+          "successUri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "inProgressUri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "failedUri": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "transmissionMode": {
+        "type": "string",
+        "enum": [
+          "value",
+          "reference"
+        ],
+        "default": [
+          "value"
+        ]
+      }
+    },
+    "parameters": {
+      "f-metadata": {
+        "name": "f",
+        "in": "query",
+        "description": "The format of the response. If no value is provided, the accept header is used to determine the format. Accepted values are 'json' or 'html'.",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "json",
+            "html"
+          ]
+        },
+        "style": "form",
+        "explode": false
+      },
+      "datetime": {
+        "name": "datetime",
+        "in": "query",
+        "description": "Either a date-time or an interval, half-bounded or bounded. Date and time expressions\nadhere to RFC 3339. Half-bounded intervals are expressed using double-dots.\n\nExamples:\n\n* A date-time: \"2018-02-12T23:20:50Z\"\n* A bounded interval: \"2018-02-12T00:00:00Z/2018-03-18T12:31:12Z\"\n* Half-bounded intervals: \"2018-02-12T00:00:00Z/..\" or \"../2018-03-18T12:31:12Z\"\n\nOnly features that have a temporal property that intersects the value of\n`datetime` are selected.\n\nIf a feature has multiple temporal properties, it is the decision of the\nserver whether only a single temporal property is used to determine\nthe extent or all relevant temporal properties.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "style": "form",
+        "explode": false
+      },
+      "processID-path": {
+        "name": "processID",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/processes-list"
+        }
+      },
+      "jobID": {
+        "name": "jobID",
+        "in": "path",
+        "description": "local identifier of a job",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "processID-query": {
+        "name": "processID",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 10
+        }
+      },
+      "type": {
+        "name": "type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "process"
+            ]
+          }
+        }
+      },
+      "status": {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/statusCode"
+          }
+        }
+      },
+      "minDuration": {
+        "name": "minDuration",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "maxDuration": {
+        "name": "maxDuration",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Execute": {
+        "description": "Request of a process execution",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "The requested resource does not exist on the server. For example, a path parameter had an incorrect value.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/exception"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "NotAcceptable": {
+        "description": "Content negotiation failed. For example, the `Accept` header submitted in the request did not support any of the media types supported by the server for the requested resource.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/exception"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "A server error occurred.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/exception"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "InvalidParameter": {
+        "description": "A query parameter has an invalid value.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/exception"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Exception": {
+        "description": "An error occured.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/exception"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "LandingPage": {
+        "description": "The landing page provides links to the API definition (link relation `service-desc`, in this case path `/api`),\nto the Conformance declaration (path `/conformance`, link relation `http://www.opengis.net/def/rel/ogc/1.0/conformance`), and to other resources.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/landingPage"
+            }
+          },
+          "text/html": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Conformance": {
+        "description": "The URIs of all conformance classes supported by the server\n\nTo support \"generic\" clients that want to access multiple\nOGC API - Processes implementations - and not \"just\" a specific\nAPI / server, the server declares the conformance\nclasses it implements and conforms to.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/confClasses"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ProcessList": {
+        "description": "Information about the available processes",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/processList"
+            }
+          }
+        }
+      },
+      "ProcessDescription": {
+        "description": "A process description.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/process"
+            }
+          }
+        }
+      },
+      "ExecuteSync": {
+        "description": "Result of synchronous execution",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/results"
+            }
+          }
+        }
+      },
+      "ExecuteAsync": {
+        "description": "Result of asynchronous execution",
+        "headers": {
+          "Location": {
+            "description": "URL to the job",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/statusInfo"
+            }
+          }
+        }
+      },
+      "JobList": {
+        "description": "A list of jobs for this process.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/jobList"
+            }
+          }
+        }
+      },
+      "JobStatus": {
+        "description": "The status of a job.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/statusInfo"
+            }
+          }
+        }
+      },
+      "JobResults": {
+        "description": "The processing results of a job.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/results"
+            }
+          }
+        }
+      }
+    }
+  }
+}
