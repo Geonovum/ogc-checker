@@ -1,8 +1,8 @@
 import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone, findIndex } from 'ramda';
 import { describe, expect, test } from 'vitest';
-import exampleDoc from '../examples/processes.json';
-import ruleset from './processes-job-list';
+import exampleDoc from '../examples/processes-1.0.json';
+import ruleset from './processes-v1-job-list';
 
 const spectral = new Spectral();
 spectral.setRuleset(ruleset);
@@ -238,6 +238,22 @@ describe('/req/job-list/duration-definition', () => {
     (oasDoc.paths['/jobs'].get.parameters[paramIndex] as Record<string, unknown>) = {
       ...oasDoc.components.parameters.minDuration,
       required: true,
+    };
+
+    const violations = await spectral.run(oasDoc);
+
+    expect(violations).toContainViolation('/req/job-list/duration-definition#minDuration', 1);
+  });
+
+  test('Fails when parameter uses the 2.0 plain-integer schema', async () => {
+    const oasDoc = clone(exampleDoc);
+    const paramIndex = findIndex(param => param.$ref === '#/components/parameters/minDuration', oasDoc.paths['/jobs'].get.parameters);
+
+    (oasDoc.paths['/jobs'].get.parameters[paramIndex] as Record<string, unknown>) = {
+      ...oasDoc.components.parameters.minDuration,
+      schema: {
+        type: 'integer',
+      },
     };
 
     const violations = await spectral.run(oasDoc);

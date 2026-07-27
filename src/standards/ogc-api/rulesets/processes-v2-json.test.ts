@@ -1,8 +1,8 @@
 import { Spectral } from '@geonovum/standards-checker/spectral/core';
 import { clone } from 'ramda';
 import { describe, expect, test } from 'vitest';
-import exampleDoc from '../examples/processes.json';
-import ruleset from './processes-json';
+import exampleDoc from '../examples/processes-2.0.json';
+import ruleset from './processes-v2-json';
 import { APPLICATION_JSON_TYPE } from '@geonovum/standards-checker';
 
 const spectral = new Spectral();

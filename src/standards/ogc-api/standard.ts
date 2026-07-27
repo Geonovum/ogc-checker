@@ -9,18 +9,12 @@ import {
 import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
 // Examples are imported as raw text (`?raw`) and appear verbatim in the editor.
 import featuresExample from './examples/features.json?raw';
-import processesExample from './examples/processes.json?raw';
+import processesV1Example from './examples/processes-1.0.json?raw';
+import processesV2Example from './examples/processes-2.0.json?raw';
 import recordsExample from './examples/records.json?raw';
-import rulesets from './rulesets';
+import { featuresRulesets, processesV1Rulesets, processesV2Rulesets, recordsRulesets } from './rulesets';
 
 const sourceLabel = (confClass: string) => confClass.replace('http://www.opengis.net/spec/', '');
-
-export const ogcapiFeatures = 'http://www.opengis.net/spec/ogcapi-features-';
-export const ogcApiProcesses = 'http://www.opengis.net/spec/ogcapi-processes-';
-export const ogcApiRecords = 'http://www.opengis.net/spec/ogcapi-records-';
-
-const subsetByPrefix = (prefix: string): Record<string, RulesetDefinition> =>
-  Object.fromEntries(Object.entries(rulesets).filter(([uri]) => uri.startsWith(prefix)));
 
 // Follows an OGC API landing page to its OpenAPI service-desc and conformance
 // declaration, then keeps the rulesets whose conformance class this version
@@ -73,10 +67,6 @@ const responseMapper =
     return { content: responseText };
   };
 
-const featuresRulesets = subsetByPrefix(ogcapiFeatures);
-const processesRulesets = subsetByPrefix(ogcApiProcesses);
-const recordsRulesets = subsetByPrefix(ogcApiRecords);
-
 export const ogcApiFeaturesStandard: Standard = {
   name: 'OGC API - Features',
   slug: 'ogc-api-features',
@@ -99,14 +89,25 @@ export const ogcApiProcessesStandard: Standard = {
   slug: 'ogc-api-processes',
   versions: [
     {
+      id: '1.0.0',
+      label: '1.0.0',
+      status: 'final',
+      example: processesV1Example,
+      rulesets: processesV1Rulesets,
+      sourceLabel,
+      responseMapper: responseMapper(processesV1Rulesets),
+      // The bare slug used to select the (then only) 2.0 draft; it now resolves
+      // to the standard's default, which is the approved 1.0.
+      legacySlug: 'ogc-api-processes',
+    },
+    {
       id: '2.0.0',
       label: '2.0.0',
       status: 'draft',
-      example: processesExample,
-      rulesets: processesRulesets,
+      example: processesV2Example,
+      rulesets: processesV2Rulesets,
       sourceLabel,
-      responseMapper: responseMapper(processesRulesets),
-      legacySlug: 'ogc-api-processes',
+      responseMapper: responseMapper(processesV2Rulesets),
     },
   ],
 };
