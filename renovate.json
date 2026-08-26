@@ -4,5 +4,5 @@
   "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": { "enabled": true },
   "timezone": "Europe/Amsterdam",
-  "schedule": ["after 8am and before 10am"]
+  "schedule": ["after 6am and before 8am"]
 }
