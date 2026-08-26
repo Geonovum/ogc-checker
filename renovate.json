@@ -1,0 +1,8 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "postUpdateOptions": ["pnpmDedupe"],
+  "lockFileMaintenance": { "enabled": true },
+  "timezone": "Europe/Amsterdam",
+  "schedule": ["after 6am and before 8am"]
+}
