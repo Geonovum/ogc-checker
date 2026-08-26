@@ -3,5 +3,6 @@
   "extends": ["config:recommended"],
   "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": { "enabled": true },
-  "schedule": ["before 6am on monday"]
+  "timezone": "Europe/Amsterdam",
+  "schedule": ["after 8am and before 10am"]
 }
