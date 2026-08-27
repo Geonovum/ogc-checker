@@ -1,5 +1,17 @@
 # @geonovum/ogc-checker
 
+## 1.3.0
+
+### Minor Changes
+
+- f9a27fb: Drop Node 20 support: `engines.node` is now `>=22.18`, matching `@geonovum/standards-checker`.
+  Node 20 reached end-of-life in April 2026. Use Node 22 or 24 to run the CLI.
+- Update `@geonovum/standards-checker` to 1.3.0. The CLI now resolves relative external `$ref`s
+  (e.g. `"$ref": "./schema.json"`) against the input document's own location instead of the
+  working directory, for both file and URL inputs. JSON output gains a `ruleset` field carrying
+  the conformance class per diagnostic; `source` now always refers to the file or URL the
+  diagnostic lives in.
+
 ## 1.2.0
 
 ### Minor Changes
