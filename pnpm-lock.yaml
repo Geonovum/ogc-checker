@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@asyncapi/specs': 6.11.1
-
 importers:
 
   .:
