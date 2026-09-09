@@ -5,5 +5,12 @@
   "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": { "enabled": true },
   "timezone": "Europe/Amsterdam",
-  "schedule": ["after 6am and before 8am"]
+  "schedule": ["after 6am and before 8am"],
+  "packageRules": [
+    {
+      "description": "Hold TypeScript on 6.x. TS 7.0 ships no compiler API, so typescript-eslint cannot run against it, tracked in typescript-eslint/typescript-eslint#10940. Lift this when typescript-eslint declares TS 7 support, not merely when 7.1 ships its API.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    }
+  ]
 }
