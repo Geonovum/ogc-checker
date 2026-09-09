@@ -54,10 +54,5 @@
   },
   "overrides": {
     "@asyncapi/specs": "6.11.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "@asyncapi/specs": "6.11.1"
-    }
   }
 }
