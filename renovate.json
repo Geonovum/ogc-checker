@@ -3,9 +3,13 @@
   "extends": ["config:recommended"],
   "minimumReleaseAge": "1 day",
   "postUpdateOptions": ["pnpmDedupe"],
-  "lockFileMaintenance": { "enabled": true },
+  "lockFileMaintenance": {
+    "description": "lockFileMaintenance keeps its own default schedule (before 4am on monday) and ignores the top-level one, so repeat it here.",
+    "enabled": true,
+    "schedule": ["on tuesday"]
+  },
   "timezone": "Europe/Amsterdam",
-  "schedule": ["after 6am and before 8am"],
+  "schedule": ["on tuesday"],
   "packageRules": [
     {
       "description": "Hold TypeScript on 6.x. TS 7.0 ships no compiler API, so typescript-eslint cannot run against it, tracked in typescript-eslint/typescript-eslint#10940. Lift this when typescript-eslint declares TS 7 support, not merely when 7.1 ships its API.",
