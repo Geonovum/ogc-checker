@@ -3,7 +3,7 @@
 ########################################
 # Stage 1 — build CLI + web bundle
 ########################################
-FROM node:22-alpine AS build
+FROM node:24-bookworm-slim AS build
 
 # Enable the pnpm version pinned in package.json ("packageManager").
 RUN corepack enable
@@ -25,18 +25,18 @@ RUN pnpm exec tsc -b \
  && pnpm run build:cli \
  && pnpm exec vite build --base=./
 
+# Drop devDependencies so only runtime deps are carried into the final image.
+RUN pnpm prune --prod
+
 ########################################
-# Stage 2 — lightweight runtime
+# Stage 2 — distroless non-root runtime
 ########################################
-FROM node:22-alpine AS runtime
+FROM gcr.io/distroless/nodejs24-debian13:nonroot AS runtime
 
 ENV NODE_ENV=production \
     PORT=8080
 
 WORKDIR /app
-
-# Static file server used for the "serve" (web) mode.
-RUN npm install -g serve@14
 
 # Bring over the built artefacts and their runtime dependencies.
 # dist/ holds the CLI bundle (cli.mjs); docs/ holds the built web UI.
@@ -44,12 +44,12 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/docs ./docs
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
-
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY docker-entrypoint.mjs ./docker-entrypoint.mjs
 
 EXPOSE 8080
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+# The distroless base already runs as the non-root "nonroot" user (uid 65532)
+# and has no shell, so dispatch through a Node entrypoint instead of a script.
+ENTRYPOINT ["/nodejs/bin/node", "/app/docker-entrypoint.mjs"]
 # Default: print the CLI help. Pass `serve` to launch the web UI instead.
 CMD ["--help"]
