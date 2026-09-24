@@ -205,7 +205,7 @@ importers:
         version: 10.10.0
       prettier:
         specifier: ^3.9.6
-        version: 3.9.6
+        version: 3.9.9
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -2108,8 +2108,8 @@ packages:
     resolution: {integrity: sha512-SxToR7P8Y2lWmv/kTzVLC1t/GDI2WGjMwNhLLE9qtH8Q13C+aEmuRlzDst4Up4s0Wc8sF2M+J57iB3cMLqftfg==}
     engines: {node: '>=6.0.0'}
 
-  prettier@3.9.6:
-    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+  prettier@3.9.9:
+    resolution: {integrity: sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3069,7 +3069,7 @@ snapshots:
       commander: 15.0.0
       esbuild: 0.28.2
       eslint-config-prettier: 10.1.8(eslint@10.10.0)
-      eslint-plugin-prettier: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.10.0))(eslint@10.10.0)(prettier@3.9.6)
+      eslint-plugin-prettier: 5.5.6(eslint-config-prettier@10.1.8(eslint@10.10.0))(eslint@10.10.0)(prettier@3.9.9)
       eslint-plugin-react-hooks: 7.1.1(eslint@10.10.0)
       eslint-plugin-react-refresh: 0.5.6(eslint@10.10.0)
       globals: 17.12.0
@@ -3077,7 +3077,7 @@ snapshots:
       json-schema-merge-allof: 0.8.1
       lucide-react: 1.46.0(react@19.3.0)
       nimma: 0.7.2
-      prettier: 3.9.6
+      prettier: 3.9.9
       ramda: 0.32.0
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
@@ -4046,10 +4046,10 @@ snapshots:
     dependencies:
       eslint: 10.10.0
 
-  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.10.0))(eslint@10.10.0)(prettier@3.9.6):
+  eslint-plugin-prettier@5.5.6(eslint-config-prettier@10.1.8(eslint@10.10.0))(eslint@10.10.0)(prettier@3.9.9):
     dependencies:
       eslint: 10.10.0
-      prettier: 3.9.6
+      prettier: 3.9.9
       prettier-linter-helpers: 1.0.1
       synckit: 0.11.13
     optionalDependencies:
@@ -4657,7 +4657,7 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier@3.9.6: {}
+  prettier@3.9.9: {}
 
   punycode@2.3.1: {}
 
