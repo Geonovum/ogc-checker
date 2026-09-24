@@ -65,6 +65,46 @@ resolves the old slug to the same standard/version): `--ruleset json-fg` == `--s
 
 Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected error.
 
+## Docker
+
+The repository ships a `Dockerfile` that builds a single image able to run both the **CLI**
+(`validate`) and the **web UI**. The entrypoint dispatches on the first argument: `serve` (or `web`)
+starts the web server, anything else is forwarded to the `ogc-checker` CLI.
+
+### Build the image
+
+```bash
+docker build -t ogc-checker:local .
+```
+
+### CLI mode
+
+```bash
+# Help
+docker run --rm ogc-checker:local --help
+
+# Validate a local file (mount it into the container)
+docker run --rm -v "$PWD/openapi.json:/data/openapi.json:ro" \
+  ogc-checker:local validate --standard ogc-api-processes --input /data/openapi.json
+
+# Validate from a URL
+docker run --rm ogc-checker:local \
+  validate --standard json-fg --input https://example.com/spec.json
+
+# Validate from stdin
+cat spec.json | docker run --rm -i ogc-checker:local validate --standard json-fg
+```
+
+### Web UI mode
+
+```bash
+docker run --rm -p 8080:8080 ogc-checker:local serve
+# then open http://localhost:8080/
+```
+
+The listening port inside the container is `8080`; override it with `-e PORT=<port>` and adjust the
+`-p` mapping accordingly (e.g. `-p 18080:8080`).
+
 ## Specifications
 
 Each specification below maps to a **standard** in the checker; its requirement table lists the
