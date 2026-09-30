@@ -1,5 +1,16 @@
 # @geonovum/ogc-checker
 
+## 1.3.2
+
+### Patch Changes
+
+- 14e4f7b: Add a `Dockerfile` with two targets: `cli` (the default) runs the `ogc-checker` CLI on a distroless,
+  non-root Node image, and `web` serves the web UI with Caddy as a non-root user. See the README's
+  "Docker" section for build and run commands.
+- c8d91bb: Update `@geonovum/standards-checker` to 1.4.1. It builds the CLI bundle with tsdown 0.23 and keeps its
+  `spectral/rulesets` entry, which the CLI loads at runtime, importable in Node. The CLI and the web app
+  behave exactly as before.
+
 ## 1.3.1
 
 ### Patch Changes
