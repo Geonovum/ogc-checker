@@ -27,3 +27,22 @@ jobs:
       - run: pnpm build
       - run: pnpm lint
       - run: pnpm test run
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the cli image
+        run: docker build --target cli -t checker-cli .
+      - name: Build the web image
+        run: docker build --target web -t checker-web .
+      - name: Smoke-test the cli image
+        run: docker run --rm checker-cli --help
+      - name: Smoke-test the web image
+        run: |
+          docker run -d --rm --name checker-web -p 8080:8080 checker-web
+          trap 'docker stop checker-web' EXIT
+          curl -sf --retry 10 --retry-all-errors --retry-delay 1 http://localhost:8080/ -o index.html
+          script=$(grep -o 'assets/[^"]*\.js' index.html | head -1)
+          curl -sf "http://localhost:8080/$script" -o /dev/null
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/assets/missing.js)" = 404

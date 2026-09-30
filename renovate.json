@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["config:recommended", "docker:pinDigests"],
   "minimumReleaseAge": "1 day",
   "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": {
@@ -15,6 +15,19 @@
       "description": "Hold TypeScript on 6.x. TS 7.0 ships no compiler API, so typescript-eslint cannot run against it, tracked in typescript-eslint/typescript-eslint#10940. Lift this when typescript-eslint declares TS 7 support, not merely when 7.1 ships its API.",
       "matchPackageNames": ["typescript"],
       "allowedVersions": "<7"
+    },
+    {
+      "description": "Batch non-major base-image updates (including digest refreshes) into one PR, so the build, web and cli stages move together.",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "Docker base images"
+    },
+    {
+      "description": "The Node major is part of the distroless image name (nodejs24-debian13), which Renovate cannot bump. Upgrade the node build image and the distroless image to a new Node major together, by hand.",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["node"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ]
 }
