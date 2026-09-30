@@ -67,43 +67,42 @@ Exit codes: `0` = pass, `1` = failed per `--fail-on` policy, `>1` = unexpected e
 
 ## Docker
 
-The repository ships a `Dockerfile` that builds a single image able to run both the **CLI**
-(`validate`) and the **web UI**. The entrypoint dispatches on the first argument: `serve` (or `web`)
-starts the web server, anything else is forwarded to the `ogc-checker` CLI.
+The repository ships a `Dockerfile` with two targets built from the same sources:
 
-### Build the image
+- `cli` (default): the `ogc-checker` CLI on a distroless, non-root Node image.
+- `web`: the web UI as static files served by [Caddy](https://caddyserver.com/), running as a
+  non-root user.
 
-```bash
-docker build -t ogc-checker:local .
-```
-
-### CLI mode
+### CLI
 
 ```bash
+docker build --target cli -t ogc-checker .
+
 # Help
-docker run --rm ogc-checker:local --help
+docker run --rm ogc-checker --help
 
 # Validate a local file (mount it into the container)
 docker run --rm -v "$PWD/openapi.json:/data/openapi.json:ro" \
-  ogc-checker:local validate --standard ogc-api-processes --input /data/openapi.json
+  ogc-checker validate --standard ogc-api-processes --input /data/openapi.json
 
 # Validate from a URL
-docker run --rm ogc-checker:local \
+docker run --rm ogc-checker \
   validate --standard json-fg --input https://example.com/spec.json
 
 # Validate from stdin
-cat spec.json | docker run --rm -i ogc-checker:local validate --standard json-fg
+cat spec.json | docker run --rm -i ogc-checker validate --standard json-fg
 ```
 
-### Web UI mode
+### Web UI
 
 ```bash
-docker run --rm -p 8080:8080 ogc-checker:local serve
+docker build --target web -t ogc-checker-web .
+docker run --rm -p 8080:8080 ogc-checker-web
 # then open http://localhost:8080/
 ```
 
 The listening port inside the container is `8080`; override it with `-e PORT=<port>` and adjust the
-`-p` mapping accordingly (e.g. `-p 18080:8080`).
+`-p` mapping accordingly (e.g. `-e PORT=9090 -p 9090:9090`).
 
 ## Specifications
 
