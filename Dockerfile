@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+# syntax=docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
 
 # Two runtime images from one build:
 #
@@ -12,7 +12,7 @@
 ########################################
 # Build CLI + web bundle
 ########################################
-FROM node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 AS build
+FROM node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20 AS build
 
 # Enable the pnpm version pinned in package.json ("packageManager").
 RUN corepack enable
@@ -38,7 +38,7 @@ RUN pnpm prune --prod
 ########################################
 # Web UI: static files served by Caddy
 ########################################
-FROM caddy:2.11.4-alpine@sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b AS web
+FROM caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f AS web
 
 # The UI routes on the URL hash, so any other path is redirected to the root
 # (a missing asset stays a 404). The admin API and config persistence are
