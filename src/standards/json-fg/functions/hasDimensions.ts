@@ -1,4 +1,4 @@
-import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { RulesetFunction } from '@geonovum/standards-checker/openlint/core';
 import { Coordinates } from '../../types';
 import { getDimensions, isValidCoordinateArray } from './util';
 import { errorMessage } from '@geonovum/standards-checker';

@@ -1,5 +1,5 @@
-import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
-import { schema } from '@geonovum/standards-checker/spectral/functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
+import { schema } from '@geonovum/standards-checker/openlint/functions';
 import { GeometryTypes } from '../../types';
 
 export const JSON_FG_CIRCULAR_ARCS_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/circular-arcs';

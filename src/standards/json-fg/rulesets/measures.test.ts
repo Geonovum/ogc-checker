@@ -1,4 +1,4 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import { GeometryTypes } from '../../types';
@@ -6,12 +6,12 @@ import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_MEASURES_URI } from './measures';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/measures/metadata', () => {
   test('Succeeds when a feature does not contain a "measures" member and does not include the Measures conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_MEASURES_URI, featureDoc.conformsTo),
     });
@@ -20,7 +20,7 @@ describe('/req/measures/metadata', () => {
   });
 
   test('Succeeds when a feature collection does not contain a "measures" member and does not include the Measures conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_MEASURES_URI, featureDoc.conformsTo),
     });
@@ -29,7 +29,7 @@ describe('/req/measures/metadata', () => {
   });
 
   test('Fails when a feature contains a "measures" member and does not include the Measures conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_MEASURES_URI, featureDoc.conformsTo),
       measures: {
@@ -41,7 +41,7 @@ describe('/req/measures/metadata', () => {
   });
 
   test('Fails when a feature collection contains a "measures" member and does not include the Measures conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_MEASURES_URI, featureDoc.conformsTo),
       measures: {
@@ -55,7 +55,7 @@ describe('/req/measures/metadata', () => {
 
 describe('/req/measures/coordinates', () => {
   test('Succeeds when a feature place has type "Point" and the coordinate dimension is 2', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_MEASURES_URI],
       place: {
@@ -68,7 +68,7 @@ describe('/req/measures/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "Point" with measures and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_MEASURES_URI],
       measures: { enabled: true },
@@ -82,7 +82,7 @@ describe('/req/measures/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Point" and the coordinate dimension is not 2', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_MEASURES_URI],
       place: {
@@ -95,7 +95,7 @@ describe('/req/measures/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Point" with measures and the coordinate dimension is not 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_MEASURES_URI],
       measures: { enabled: true },

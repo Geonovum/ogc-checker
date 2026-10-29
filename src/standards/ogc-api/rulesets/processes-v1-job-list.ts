@@ -1,4 +1,4 @@
-import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
 import { oas3_0 } from './formats';
 import * as rule from './processes-rules';
 import { SCHEMAS_URI_PREFIX } from './processes-v1-core';

@@ -1,16 +1,16 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { describe, expect, test } from 'vitest';
 import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_CORE_URI } from './core';
 import { GeometryTypes } from '../../types';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/core/schema-valid', () => {
   test('Fails when required properties are absent on feature', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       geometry: undefined,
     });
@@ -19,7 +19,7 @@ describe('/req/core/schema-valid', () => {
   });
 
   test('Fails when required properties are absent on feature collection', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: undefined,
     });
@@ -30,7 +30,7 @@ describe('/req/core/schema-valid', () => {
 
 describe('/req/core/metadata', () => {
   test('Fails when a member feature of a feature collection contains a "conformsTo" member', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: [
         {
@@ -46,7 +46,7 @@ describe('/req/core/metadata', () => {
 
 describe('/req/core/interval', () => {
   test('Fails when start instant is date and end instant is timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         interval: ['2024-02-28', '2024-02-29T10:00:00Z'],
@@ -57,7 +57,7 @@ describe('/req/core/interval', () => {
   });
 
   test('Fails when start instant is timestamp and end instant is date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         interval: ['2024-02-28T10:00:00Z', '2024-02-29'],
@@ -68,7 +68,7 @@ describe('/req/core/interval', () => {
   });
 
   test('Fails when start instant is later than end instant', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         interval: ['2024-02-28', '2024-02-27'],
@@ -81,7 +81,7 @@ describe('/req/core/interval', () => {
 
 describe('/req/core/instant-and-interval', () => {
   test('Succeeds when date does match "full-date" part of the timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -93,7 +93,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Fails when date does not match "full-date" part of the timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-27',
@@ -105,7 +105,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when date interval contains timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-28T10:00:00Z',
@@ -117,7 +117,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when zero-length date interval matches "full-date" part of timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-28T10:00:00Z',
@@ -129,7 +129,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Fails when date interval does not contain timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-27T10:00:00Z',
@@ -141,7 +141,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when timestamp interval contains timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-28T10:00:00Z',
@@ -153,7 +153,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when zero-length timestamp interval equals the timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-28T10:00:00Z',
@@ -165,7 +165,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Fails when timestamp interval does not contain timestamp', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         timestamp: '2024-02-28T08:00:00Z',
@@ -177,7 +177,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when date interval contains date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -189,7 +189,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when zero-length date interval equals the date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -201,7 +201,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Fails when date interval does not contain date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-27',
@@ -213,7 +213,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when timestamp interval includes timestamps on the date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -225,7 +225,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Succeeds when "full-date" part of zero-length timestamp interval equals the date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -237,7 +237,7 @@ describe('/req/core/instant-and-interval', () => {
   });
 
   test('Fails when timestamp interval does not include timestamps on the date', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       time: {
         date: '2024-02-28',
@@ -251,7 +251,7 @@ describe('/req/core/instant-and-interval', () => {
 
 describe('/req/core/coordinate-dimension', () => {
   test('Succeeds when all coordinates of the "geometry" member have the same dimension', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       geometry: {
         type: GeometryTypes.MULTIPOINT,
@@ -266,7 +266,7 @@ describe('/req/core/coordinate-dimension', () => {
   });
 
   test('Fails when some coordinates of the "geometry" member have different dimensions', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       geometry: {
         type: GeometryTypes.MULTIPOINT,
@@ -281,7 +281,7 @@ describe('/req/core/coordinate-dimension', () => {
   });
 
   test('Succeeds when all coordinates of the "place" member have the same dimension', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.PRISM,
@@ -300,7 +300,7 @@ describe('/req/core/coordinate-dimension', () => {
   });
 
   test('Fails when some coordinates of the "place" member have different dimensions', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.MULTIPOINT,
@@ -316,7 +316,7 @@ describe('/req/core/coordinate-dimension', () => {
   });
 
   test('Fails when some coordinates of the "place" member being a Prism have different dimensions', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.PRISM,
@@ -335,7 +335,7 @@ describe('/req/core/coordinate-dimension', () => {
   });
 
   test('Fails when some coordinates of the "place" member being a MultiPrism have different dimensions', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.MULTIPRISM,
@@ -361,7 +361,7 @@ describe('/req/core/coordinate-dimension', () => {
 
 describe('/req/core/geometry-wgs84', () => {
   test('Fails when some first elements have a value out of bounds.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       geometry: {
         type: GeometryTypes.MULTIPOINT,
@@ -376,7 +376,7 @@ describe('/req/core/geometry-wgs84', () => {
   });
 
   test('Fails when some first elements have a value out of bounds.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       geometry: {
         type: GeometryTypes.MULTIPOINT,
@@ -393,7 +393,7 @@ describe('/req/core/geometry-wgs84', () => {
 
 describe('/req/core/place-geometries', () => {
   test('Succeeds when a GeoJSON type and a non-CRS84 coordRefSys is given on the feature level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POINT,
@@ -405,7 +405,7 @@ describe('/req/core/place-geometries', () => {
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys is given on the feature level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       coordRefSys: 'http://www.opengis.net/def/crs/OGC/0/CRS84',
       place: {
@@ -418,7 +418,7 @@ describe('/req/core/place-geometries', () => {
   });
 
   test('Succeeds when a GeoJSON type and a non-CRS84 coordRefSys is given on the feature collection level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       coordRefSys: 'http://www.opengis.net/def/crs/EPSG/0/27700',
       features: [
@@ -436,7 +436,7 @@ describe('/req/core/place-geometries', () => {
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys is given on the feature collection level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       coordRefSys: 'http://www.opengis.net/def/crs/OGC/0/CRS84',
       features: [
@@ -454,7 +454,7 @@ describe('/req/core/place-geometries', () => {
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys by ref is given on the feature level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       coordRefSys: {
         type: 'Reference',
@@ -470,7 +470,7 @@ describe('/req/core/place-geometries', () => {
   });
 
   test('Fails when a GeoJSON type and a CRS84 coordRefSys by ref is given on the feature collection level.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       coordRefSys: {
         type: 'Reference',
@@ -493,7 +493,7 @@ describe('/req/core/place-geometries', () => {
 
 describe('/req/core/fallback', () => {
   test('Fails when the values for the "place" and "geometry" members are equal.', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POINT,

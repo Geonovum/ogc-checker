@@ -6,7 +6,7 @@ import {
   type Standard,
   type VersionResponseMapper,
 } from '@geonovum/standards-checker';
-import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
 // Examples are imported as raw text (`?raw`) and appear verbatim in the editor.
 import featuresExample from './examples/features.json?raw';
 import processesV1Example from './examples/processes-1.0.json?raw';

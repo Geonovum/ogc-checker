@@ -1,5 +1,5 @@
 import { errorMessage } from '@geonovum/standards-checker';
-import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { RulesetFunction } from '@geonovum/standards-checker/openlint/core';
 import { equals } from 'ramda';
 import { getFeatures, isFeature, isFeatureCollection } from './util';
 

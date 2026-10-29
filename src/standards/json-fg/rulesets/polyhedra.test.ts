@@ -1,4 +1,4 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import { GeometryTypes } from '../../types';
@@ -6,12 +6,12 @@ import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_POLYHEDRA_URI } from './polyhedra';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/polyhedra/metadata', () => {
   test('Succeeds when a feature place does not have type "Polyhedron" or "MultiPolygon" and does not include the Polyhedra conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POINT,
@@ -24,7 +24,7 @@ describe('/req/polyhedra/metadata', () => {
   test('Succeeds when a feature collection has a place-less feature and no polyhedron geometry (regression: absent "place" must not trip the rule)', async () => {
     const { place: _omitted, ...placelessFeature } = featureCollectionDoc.features[0];
 
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: [placelessFeature, ...featureCollectionDoc.features.slice(1)],
     });
@@ -33,7 +33,7 @@ describe('/req/polyhedra/metadata', () => {
   });
 
   test('Fails when a feature place has type "Polyhedron" and does not include the Polyhedra conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_POLYHEDRA_URI, featureDoc.conformsTo),
     });
@@ -42,7 +42,7 @@ describe('/req/polyhedra/metadata', () => {
   });
 
   test('Fails when a feature place has type "MultiPolyhedron" and does not include the Polyhedra conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_POLYHEDRA_URI, featureDoc.conformsTo),
       place: {
@@ -54,7 +54,7 @@ describe('/req/polyhedra/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "Polyhedron" and does not include the Polyhedra conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_POLYHEDRA_URI, featureDoc.conformsTo),
       features: [
@@ -71,7 +71,7 @@ describe('/req/polyhedra/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "MultiPolyhedron" and does not include the Polyhedra conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_POLYHEDRA_URI, featureDoc.conformsTo),
       features: [
@@ -90,7 +90,7 @@ describe('/req/polyhedra/metadata', () => {
 
 describe('/req/polyhedra/coordinates', () => {
   test('Succeeds when a feature place has type "Polyhedron" and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POLYHEDRON,
@@ -102,7 +102,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "MultiPolyhedron" and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.MULTIPOLYHEDRON,
@@ -114,7 +114,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Polyhedron" and the coordinate dimension is not 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POLYHEDRON,
@@ -126,7 +126,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Fails when a feature place has type "MultiPolyhedron" and the coordinate dimension is not 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.MULTIPOLYHEDRON,
@@ -138,7 +138,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "Polyhedron" with measures and the coordinate dimension is 4', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       measures: { enabled: true },
       place: {
@@ -151,7 +151,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "MultiPolyhedron" with measures and the coordinate dimension is 4', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       measures: { enabled: true },
       place: {
@@ -164,7 +164,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Polyhedron" with measures and the coordinate dimension is not 4', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       measures: { enabled: true },
       place: {
@@ -177,7 +177,7 @@ describe('/req/polyhedra/coordinates', () => {
   });
 
   test('Fails when a feature place has type "MultiPolyhedron" with measures and the coordinate dimension is not 4', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       measures: { enabled: true },
       place: {

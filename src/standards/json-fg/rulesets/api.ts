@@ -1,4 +1,4 @@
-import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
 
 export const JSON_FG_API_URI = 'http://www.opengis.net/spec/json-fg-1/1.0/conf/api';
 

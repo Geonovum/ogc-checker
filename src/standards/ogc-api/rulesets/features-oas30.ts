@@ -1,5 +1,5 @@
-import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
-import { oasDocumentSchema, oasPathParam } from '@geonovum/standards-checker/spectral/rulesets';
+import type { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
+import { oasDocumentSchema, oasPathParam } from '@geonovum/standards-checker/openlint/rulesets';
 import { oas3_0 } from './formats';
 
 export const OGC_API_FEATURES_OAS30_URI = 'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/oas30';

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
-import { schema } from '@geonovum/standards-checker/spectral/functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
+import { schema } from '@geonovum/standards-checker/openlint/functions';
 import { hasDimensions } from '../functions/hasDimensions';
 import { isFeature, isFeatureCollection } from '../functions/util';
 import { GEOJSON_TYPES } from '../../types';

@@ -1,4 +1,4 @@
-import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { RulesetFunction } from '@geonovum/standards-checker/openlint/core';
 import { getFeatures, getGeometryDimension, getPlaceType, isFeatureCollection } from './util';
 import { errorMessage } from '@geonovum/standards-checker';
 import { GeometryTypes } from '../../types';

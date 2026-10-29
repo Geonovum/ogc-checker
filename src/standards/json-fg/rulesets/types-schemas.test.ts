@@ -1,4 +1,4 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { omit, reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import featureCollectionDoc from '../examples/feature-collection.json';
@@ -6,12 +6,12 @@ import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_TYPES_SCHEMAS_URI } from './types-schemas';
 import { GeometryTypes } from '../../types';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/types-schemas/metadata', () => {
   test('Fails when a feature contains a "featureType" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureSchema'], featureDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
     });
@@ -20,7 +20,7 @@ describe('/req/types-schemas/metadata', () => {
   });
 
   test('Fails when a feature contains a "featureSchema" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType'], featureDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
     });
@@ -29,7 +29,7 @@ describe('/req/types-schemas/metadata', () => {
   });
 
   test('Fails when a feature collection contains a "featureType" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureSchema'], featureCollectionDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
     });
@@ -38,7 +38,7 @@ describe('/req/types-schemas/metadata', () => {
   });
 
   test('Fails when a feature collection contains a "featureSchema" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType'], featureCollectionDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
     });
@@ -47,7 +47,7 @@ describe('/req/types-schemas/metadata', () => {
   });
 
   test('Fails when a feature collection member contains a "featureType" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType', 'featureSchema'], featureCollectionDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
       features: [
@@ -62,7 +62,7 @@ describe('/req/types-schemas/metadata', () => {
   });
 
   test('Fails when a feature collection member contains a "featureSchema" member and does not include the Feature Types and Schemas conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType', 'featureSchema'], featureCollectionDoc),
       conformsTo: reject(c => c === JSON_FG_TYPES_SCHEMAS_URI, featureDoc.conformsTo),
       features: [
@@ -79,7 +79,7 @@ describe('/req/types-schemas/metadata', () => {
 
 describe('/req/types-schemas/feature-type', () => {
   test('Fails when a feature conforms to the Feature Types and Schemas conformance class and does not contain a "featureType" member', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType', 'featureSchema'], featureDoc),
     });
 
@@ -87,7 +87,7 @@ describe('/req/types-schemas/feature-type', () => {
   });
 
   test('Succeeds when a feature collection contains a "featureType" member', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureSchema'], featureCollectionDoc),
     });
 
@@ -95,7 +95,7 @@ describe('/req/types-schemas/feature-type', () => {
   });
 
   test('Succeeds when a feature collection contains a "featureType" member in every individual feature', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType', 'featureSchema'], featureCollectionDoc),
       features: [
         {
@@ -113,7 +113,7 @@ describe('/req/types-schemas/feature-type', () => {
   });
 
   test('Fails when both a feature collection and individual features contain a "featureType" member', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: [
         {
@@ -127,7 +127,7 @@ describe('/req/types-schemas/feature-type', () => {
   });
 
   test('Fails when not every individual feature contains a "featureType" member', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType', 'featureSchema'], featureCollectionDoc),
       features: [
         {
@@ -146,7 +146,7 @@ describe('/req/types-schemas/feature-type', () => {
 
 describe('/req/types-schemas/geometry-dimension', () => {
   test('Succeeds when a feature collection with "geometryDimension" 0 contains valid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 0,
       features: [
@@ -171,7 +171,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Fails when a feature collection with "geometryDimension" 0 contains invalid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 0,
       features: [
@@ -189,7 +189,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Succeeds when a feature collection with "geometryDimension" 1 contains valid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 1,
       features: [
@@ -228,7 +228,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Fails when a feature collection with "geometryDimension" 1 contains invalid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 1,
       features: [
@@ -246,7 +246,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Succeeds when a feature collection with "geometryDimension" 2 contains valid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 2,
       features: [
@@ -271,7 +271,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Fails when a feature collection with "geometryDimension" 2 contains invalid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 2,
       features: [
@@ -289,7 +289,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Succeeds when a feature collection with "geometryDimension" 3 contains valid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 3,
       features: [
@@ -328,7 +328,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
   });
 
   test('Fails when a feature collection with "geometryDimension" 3 contains invalid geometry types', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       geometryDimension: 3,
       features: [
@@ -348,7 +348,7 @@ describe('/req/types-schemas/geometry-dimension', () => {
 
 describe('/req/types-schemas/single-feature-schema', () => {
   test('Succeeds when "featureSchema" is a string and all "featureType" members are equal', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType'], featureCollectionDoc),
       features: featureCollectionDoc.features.map(feature => ({ ...feature, featureType: 'Airport' })),
     });
@@ -357,7 +357,7 @@ describe('/req/types-schemas/single-feature-schema', () => {
   });
 
   test('Fails when "featureSchema" is a string and "featureType" members differ', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType'], featureCollectionDoc),
       features: [
         { ...featureCollectionDoc.features[0], featureType: 'Airport' },
@@ -369,7 +369,7 @@ describe('/req/types-schemas/single-feature-schema', () => {
   });
 
   test('Succeeds when "featureType" members differ but "featureSchema" is not a string', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...omit(['featureType'], featureCollectionDoc),
       featureSchema: {
         Airport: 'https://example.org/data/v1/collections/airports/schema',
@@ -392,7 +392,7 @@ describe('standalone geometry root object', () => {
   // as vacuously matching, and `/req/types-schemas/feature-type` must not run its
   // Feature/FeatureCollection discriminator against a geometry `type`.
   test('Produces no violations for a "MultiCurve" geometry root object', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       conformsTo: ['http://www.opengis.net/spec/json-fg-1/1.0/conf/core', 'http://www.opengis.net/spec/json-fg-1/1.0/conf/circular-arcs'],
       coordRefSys: 'http://www.opengis.net/def/crs/OGC/0/CRS84',
       type: 'MultiCurve',
