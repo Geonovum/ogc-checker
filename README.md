@@ -405,7 +405,7 @@ Version: 1.0 (Draft) — [Specification](https://docs.ogc.org/DRAFTS/20-004r1.ht
 
 ### Prerequisites
 
-- Node.js 24+
+- Node.js 22.18+ or 24+
 - pnpm 10+
 
 ### Setup
