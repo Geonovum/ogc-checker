@@ -1,5 +1,5 @@
-import { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
-import { schema } from '@geonovum/standards-checker/spectral/functions';
+import { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
+import { schema } from '@geonovum/standards-checker/openlint/functions';
 import { GeometryTypes } from '../../types';
 import { hasDimensions } from '../functions/hasDimensions';
 import { errorMessage } from '@geonovum/standards-checker';

@@ -1,4 +1,4 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import { GeometryTypes } from '../../types';
@@ -6,8 +6,8 @@ import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_PRISMS_URI } from './prisms';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 const PRISM_GEOMETRY = {
   type: GeometryTypes.PRISM,
@@ -21,7 +21,7 @@ const PRISM_GEOMETRY = {
 
 describe('/req/prisms/metadata', () => {
   test('Succeeds when a feature place does not have type "Prism" or "MultiPrism" and does not include the Prisms conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
     });
 
@@ -31,7 +31,7 @@ describe('/req/prisms/metadata', () => {
   test('Succeeds when a feature collection has a place-less feature and no prism geometry (regression: absent "place" must not trip the rule)', async () => {
     const { place: _omitted, ...placelessFeature } = featureCollectionDoc.features[0];
 
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: [placelessFeature, ...featureCollectionDoc.features.slice(1)],
     });
@@ -40,7 +40,7 @@ describe('/req/prisms/metadata', () => {
   });
 
   test('Fails when a feature place has type "Prism" and does not include the Prisms conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_PRISMS_URI, featureDoc.conformsTo),
       place: PRISM_GEOMETRY,
@@ -50,7 +50,7 @@ describe('/req/prisms/metadata', () => {
   });
 
   test('Fails when a feature place has type "MultiPrism" and does not include the Prisms conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_PRISMS_URI, featureDoc.conformsTo),
       place: {
@@ -63,7 +63,7 @@ describe('/req/prisms/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature place of type "Prism" and does not include the Prisms conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_PRISMS_URI, featureDoc.conformsTo),
       features: [
@@ -78,7 +78,7 @@ describe('/req/prisms/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature place of type "MultiPPrism" and does not include the Prisms conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_PRISMS_URI, featureDoc.conformsTo),
       features: [
@@ -98,7 +98,7 @@ describe('/req/prisms/metadata', () => {
 
 describe('/req/prisms/coordinates', () => {
   test('Succeeds when a feature place has type "Prism" and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: PRISM_GEOMETRY,
@@ -108,7 +108,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "MultiPrism" and the coordinate dimension is 2', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: {
@@ -121,7 +121,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Prism" and the coordinate dimension is not 2', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: {
@@ -137,7 +137,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "MultiPrism" and the coordinate dimension is not 2', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: {
@@ -158,7 +158,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "Prism" with measures and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       measures: { enabled: true },
@@ -175,7 +175,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Succeeds when a feature place has type "MultiPrism" with measures and the coordinate dimension is 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       measures: { enabled: true },
@@ -197,7 +197,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Prism" with measures and the coordinate dimension is not 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       measures: { enabled: true },
@@ -214,7 +214,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "MultiPrism" with measures and the coordinate dimension is not 3', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       measures: { enabled: true },
@@ -236,7 +236,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "Prism" and lower value is greater than upper value', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: {
@@ -250,7 +250,7 @@ describe('/req/prisms/coordinates', () => {
   });
 
   test('Fails when a feature place has type "MultiPrism" and lower value is greater than upper value', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: [...featureDoc.conformsTo, JSON_FG_PRISMS_URI],
       place: {

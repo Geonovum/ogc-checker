@@ -1,7 +1,7 @@
 import { hasSchemaMatch } from '@geonovum/standards-checker';
-import type { RulesetDefinition } from '@geonovum/standards-checker/spectral/core';
+import type { RulesetDefinition } from '@geonovum/standards-checker/openlint/core';
 import { oas3_0 } from './formats';
-import { schema, truthy } from '@geonovum/standards-checker/spectral/functions';
+import { schema, truthy } from '@geonovum/standards-checker/openlint/functions';
 
 export const OGC_API_FEATURES_CRS_URI = 'http://www.opengis.net/spec/ogcapi-features-2/1.0/conf/crs';
 

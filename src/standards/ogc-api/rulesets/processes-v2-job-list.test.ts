@@ -1,17 +1,17 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { clone, findIndex } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import exampleDoc from '../examples/processes-2.0.json';
 import ruleset from './processes-v2-job-list';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/job-list/job-list-op', () => {
   test('Fails when job list path is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths as Record<string, unknown>)['/jobs'];
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/job-list-op', 1);
   });
@@ -25,7 +25,7 @@ describe('/req/job-list/type-definition', () => {
       param => param.$ref !== '#/components/parameters/type',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/type-definition', 1);
   });
@@ -44,7 +44,7 @@ describe('/req/job-list/type-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/type-definition', 1);
   });
@@ -58,7 +58,7 @@ describe('/req/job-list/type-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/type-definition', 1);
   });
@@ -72,7 +72,7 @@ describe('/req/job-list/processID-definition', () => {
       param => param.$ref !== '#/components/parameters/processID-query',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/processID-definition', 1);
   });
@@ -91,7 +91,7 @@ describe('/req/job-list/processID-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/processID-definition', 1);
   });
@@ -105,7 +105,7 @@ describe('/req/job-list/processID-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/processID-definition', 1);
   });
@@ -119,7 +119,7 @@ describe('/req/job-list/status-definition', () => {
       param => param.$ref !== '#/components/parameters/status',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/status-definition', 1);
   });
@@ -138,7 +138,7 @@ describe('/req/job-list/status-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/status-definition', 1);
   });
@@ -152,7 +152,7 @@ describe('/req/job-list/status-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/status-definition', 1);
   });
@@ -166,7 +166,7 @@ describe('/req/job-list/datetime-definition', () => {
       param => param.$ref !== '#/components/parameters/datetime',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/datetime-definition', 1);
   });
@@ -182,7 +182,7 @@ describe('/req/job-list/datetime-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/datetime-definition', 1);
   });
@@ -196,7 +196,7 @@ describe('/req/job-list/datetime-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/datetime-definition', 1);
   });
@@ -210,7 +210,7 @@ describe('/req/job-list/duration-definition', () => {
       param => param.$ref !== '#/components/parameters/minDuration',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#minDuration', 1);
   });
@@ -226,7 +226,7 @@ describe('/req/job-list/duration-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#minDuration', 1);
   });
@@ -240,7 +240,7 @@ describe('/req/job-list/duration-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#minDuration', 1);
   });
@@ -259,7 +259,7 @@ describe('/req/job-list/duration-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#minDuration', 1);
   });
@@ -271,7 +271,7 @@ describe('/req/job-list/duration-definition', () => {
       param => param.$ref !== '#/components/parameters/maxDuration',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#maxDuration', 1);
   });
@@ -287,7 +287,7 @@ describe('/req/job-list/duration-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#maxDuration', 1);
   });
@@ -301,7 +301,7 @@ describe('/req/job-list/duration-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/duration-definition#maxDuration', 1);
   });
@@ -315,7 +315,7 @@ describe('/req/job-list/limit-definition', () => {
       param => param.$ref !== '#/components/parameters/limit',
     );
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/limit-definition', 1);
   });
@@ -331,7 +331,7 @@ describe('/req/job-list/limit-definition', () => {
       },
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/limit-definition', 1);
   });
@@ -345,7 +345,7 @@ describe('/req/job-list/limit-definition', () => {
       required: true,
     };
 
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/limit-definition', 1);
   });
@@ -355,7 +355,7 @@ describe('/req/job-list/job-list-success', () => {
   test('Fails when job list success response is absent', async () => {
     const oasDoc = clone(exampleDoc);
     delete (oasDoc.paths['/jobs'].get.responses as Record<string, unknown>)['200'];
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/job-list-success', 1);
   });
@@ -363,7 +363,7 @@ describe('/req/job-list/job-list-success', () => {
   test('Fails when job list response schema is invalid', async () => {
     const oasDoc = clone(exampleDoc);
     (oasDoc.components.schemas.jobList as Record<string, unknown>).required = [];
-    const violations = await spectral.run(oasDoc);
+    const violations = await openLint.run(oasDoc);
 
     expect(violations).toContainViolation('/req/job-list/job-list-success', 1);
   });

@@ -12,8 +12,8 @@
  * the full Processes rule vocabulary stays in one place.
  */
 import { APPLICATION_JSON_TYPE, errorMessage, hasParameter, hasPathMatch, hasSchemaMatch, OpenAPIV3_0 } from '@geonovum/standards-checker';
-import type { IFunctionResult, RuleDefinition } from '@geonovum/standards-checker/spectral/core';
-import { schema, truthy } from '@geonovum/standards-checker/spectral/functions';
+import type { IFunctionResult, RuleDefinition } from '@geonovum/standards-checker/openlint/core';
+import { schema, truthy } from '@geonovum/standards-checker/openlint/functions';
 
 /** A rule that only needs to know where its requirement is documented. */
 export type ProcessesRule = (documentationUrl: string) => RuleDefinition;

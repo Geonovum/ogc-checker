@@ -1,5 +1,5 @@
 import { getParent, queryPath, errorMessage } from '@geonovum/standards-checker';
-import { RulesetFunction } from '@geonovum/standards-checker/spectral/core';
+import { RulesetFunction } from '@geonovum/standards-checker/openlint/core';
 
 const GEOJSON_TYPES = ['Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'GeometryCollection'];
 

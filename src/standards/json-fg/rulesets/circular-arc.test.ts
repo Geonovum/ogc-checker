@@ -1,4 +1,4 @@
-import { Spectral } from '@geonovum/standards-checker/spectral/core';
+import { OpenLint } from '@geonovum/standards-checker/openlint/core';
 import { reject } from 'ramda';
 import { describe, expect, test } from 'vitest';
 import { GeometryTypes } from '../../types';
@@ -6,12 +6,12 @@ import featureCollectionDoc from '../examples/feature-collection.json';
 import featureDoc from '../examples/feature.json';
 import ruleset, { JSON_FG_CIRCULAR_ARCS_URI } from './circular-arcs';
 
-const spectral = new Spectral();
-spectral.setRuleset(ruleset);
+const openLint = new OpenLint();
+openLint.setRuleset(ruleset);
 
 describe('/req/circular-arcs/metadata', () => {
   test('Succeeds when a feature place does not have a circular arc type and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       place: {
         type: GeometryTypes.POINT,
@@ -24,7 +24,7 @@ describe('/req/circular-arcs/metadata', () => {
   test('Succeeds when a feature collection has a place-less feature and no circular arc geometry (regression: absent "place" must not trip the rule)', async () => {
     const { place: _omitted, ...placelessFeature } = featureCollectionDoc.features[0];
 
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       features: [placelessFeature, ...featureCollectionDoc.features.slice(1)],
     });
@@ -33,7 +33,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature place has type "CircularString" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       place: {
@@ -45,7 +45,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature place has type "CompoundCurve" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       place: {
@@ -57,7 +57,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature place has type "CurvePolygon" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       place: {
@@ -69,7 +69,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature place has type "MultiCurve" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       place: {
@@ -81,7 +81,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature place has type "MultiSurface" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       place: {
@@ -93,7 +93,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "CircularString" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       features: [
@@ -110,7 +110,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "CompoundCurve" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       features: [
@@ -127,7 +127,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "CurvePolygon" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       features: [
@@ -144,7 +144,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "MultiCurve" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       features: [
@@ -161,7 +161,7 @@ describe('/req/circular-arcs/metadata', () => {
   });
 
   test('Fails when a feature collection contains a feature of type "MultiSurface" and does not include the Circular Arcs conformance class', async () => {
-    const violations = await spectral.run({
+    const violations = await openLint.run({
       ...featureCollectionDoc,
       conformsTo: reject(c => c === JSON_FG_CIRCULAR_ARCS_URI, featureDoc.conformsTo),
       features: [
