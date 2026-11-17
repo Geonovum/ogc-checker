@@ -1,62 +1,140 @@
-name: Publish
+# Keep this file name: npm trusted publishing is bound to it.
+name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches:
+      - main
+  workflow_dispatch:
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  publish:
+  version:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      # No dependency cache in jobs that hold write tokens.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: pnpm install --frozen-lockfile
+      - uses: changesets/action@v2
+        with:
+          version-script: pnpm version-packages
+          commit-message: 'chore(release): version packages'
+          pr-title: 'chore(release): version packages'
+
+  # Independent of pending changesets: a queued run for the version merge can be
+  # superseded by a later push, and that later run must still release the
+  # version commit, not its own.
+  check:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      sha: ${{ steps.tag.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: tag
+        run: |
+          TAG="v$(node -p "require('./package.json').version")"
+          status=0
+          git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null || status=$?
+          case $status in
+            0)
+              echo "$TAG is already released"
+              ;;
+            2)
+              SHA=$(git log -1 --format=%H -G'^[[:space:]]*"version":' -- package.json)
+              echo "Releasing $TAG from $SHA"
+              echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+              echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              exit "$status"
+              ;;
+          esac
+
+  release:
+    needs: check
+    if: needs.check.outputs.tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      TAG: ${{ needs.check.outputs.tag }}
+      SHA: ${{ needs.check.outputs.sha }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.check.outputs.sha }}
+          persist-credentials: false
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
-          cache: 'pnpm'
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
-      - name: Verify version matches tag
-        run: |
-          TAG=${GITHUB_REF#refs/tags/v}
-          VERSION=$(node -p "require('./package.json').version")
-          if [[ "$TAG" != "$VERSION" ]]; then
-            echo "::error::Tag v$TAG does not match package.json version $VERSION"
-            exit 1
-          fi
       - run: pnpm install --frozen-lockfile
       - run: pnpm dedupe --check
       - run: pnpm build
-      - run: |
-          VERSION=$(node -p "require('./package.json').version")
-          if [[ "$VERSION" == *-* ]]; then
+      - run: pnpm lint
+      - run: pnpm test run
+      - name: Publish to npm
+        run: |
+          VERSION=${TAG#v}
+          NAME=$(node -p "require('./package.json').name")
+          status=$(curl -s -o /dev/null -w '%{http_code}' "https://registry.npmjs.org/$NAME/$VERSION")
+          if [[ "$status" == 200 ]]; then
+            echo "$NAME@$VERSION is already on npm"
+          elif [[ "$status" != 404 ]]; then
+            echo "::error::npm registry returned HTTP $status for $NAME@$VERSION"
+            exit 1
+          elif [[ "$VERSION" == *-* ]]; then
             pnpm publish --provenance --no-git-checks --tag beta
           else
             pnpm publish --provenance --no-git-checks
           fi
+      - name: Create GitHub release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      # Deploy the web UI to GitHub Pages only for final releases — a
-      # prerelease tag (any version containing a `-`) publishes to npm under
-      # the `beta` dist-tag but must not overwrite the live site.
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "GitHub release $TAG already exists"
+            exit 0
+          fi
+          awk -v heading="## ${TAG#v}" '$0 == heading { found = 1; next } /^## / && found { exit } found' CHANGELOG.md > notes.md
+          PRERELEASE=()
+          [[ "$TAG" == *-* ]] && PRERELEASE=(--prerelease)
+          gh release create "$TAG" --target "$SHA" --title "$TAG" --notes-file notes.md "${PRERELEASE[@]}"
+      # Prereleases publish to npm under the `beta` dist-tag but must not overwrite the live site.
       - uses: actions/configure-pages@v6
-        if: ${{ !contains(github.ref_name, '-') }}
+        if: ${{ !contains(env.TAG, '-') }}
       - uses: actions/upload-pages-artifact@v5
-        if: ${{ !contains(github.ref_name, '-') }}
+        if: ${{ !contains(env.TAG, '-') }}
         with:
           path: docs
       - uses: actions/deploy-pages@v5
-        if: ${{ !contains(github.ref_name, '-') }}
+        if: ${{ !contains(env.TAG, '-') }}
         id: deployment

@@ -6,7 +6,7 @@ Validates JSON-FG documents and OGC API endpoints against OGC specifications.
 
 Built on [`@geonovum/standards-checker`](https://github.com/Geonovum/standards-checker); see its documentation for the validation engine, CLI toolkit, and web UI framework.
 
-Release notes are in [`CHANGELOG.md`](CHANGELOG.md); see [Versioning & releasing](#versioning--releasing) for how it is produced.
+Release notes are in [`CHANGELOG.md`](CHANGELOG.md) and on the [GitHub releases](https://github.com/Geonovum/ogc-checker/releases) page; see [Versioning & releasing](#versioning--releasing) for how it is produced.
 
 **Demo:** https://geonovum.github.io/ogc-checker/
 
@@ -436,18 +436,40 @@ npx vitest run src/standards/json-fg/rulesets/core.test.ts
 
 Versioning, the changelog, and publishing are driven by [Changesets](https://changesets.dev/). Describing a change is decoupled from cutting a release:
 
-1. **Add a changeset with your change.** Run `pnpm changeset`, pick the bump (`major` / `minor` / `patch`), and write a one-line summary. This creates a `.changeset/<name>.md` file — commit it with your PR. Omit only for changes that don't affect the published package (CI, internal docs, tests).
+1. **Add a changeset with your change.** Run `pnpm changeset`, pick the bump (`major` / `minor` / `patch`), and write a one-line summary. This creates a `.changeset/<name>.md` file; commit it with your PR. Omit only for changes that don't affect the published package (CI, internal docs, tests).
 
-2. **Cut the release.** Run `pnpm version-packages` (alias for `changeset version`). It consumes the pending `.changeset/*.md` files, bumps `package.json`, and prepends the summaries to `CHANGELOG.md`. Review and commit the result. Don't hand-edit the `version` field — Changesets owns it.
+2. **Merge the version pull request.** Every push to `main` runs the Release workflow (`.github/workflows/publish.yml`). While changesets are pending, it opens or updates a `chore(release): version packages` pull request that runs `pnpm version-packages`: it consumes the pending `.changeset/*.md` files, bumps `package.json` to the computed version (the highest pending bump wins), and prepends the summaries to `CHANGELOG.md`. Review that pull request and merge it when you want to release. Don't hand-edit the `version` field; Changesets owns it.
 
-3. **Publish.** Tag the released version and push; the CI workflow verifies `package.json` matches the tag, builds, tests, publishes to npm, and deploys to GitHub Pages:
+   GitHub doesn't run the Build workflow on pull requests opened by the workflow token, so the version pull request shows no checks. The release job builds, lints, and tests before it publishes anyway; close and reopen the pull request if you want the checks on it.
 
-   ```bash
-   git tag v1.1.0
-   git push --tags
-   ```
+3. **Publish.** When the version pull request lands on `main`, the workflow finds a `package.json` version that has no `v<version>` tag yet. It builds, lints, and tests, publishes to npm with provenance, creates the `v<version>` tag with a GitHub release whose notes are that version's `CHANGELOG.md` section, and deploys the web UI to GitHub Pages. Starting the workflow by hand (**Actions** → **Release** → **Run workflow** on `main`) does the same as a push.
 
-   `pnpm release` (`pnpm build && changeset publish`) publishes to npm locally if you need to bypass the workflow (it does not deploy Pages).
+   To retry a failed release, use **Re-run failed jobs**. Steps that already completed (the npm publish, the GitHub release) are skipped.
+
+   `pnpm release` (`pnpm build && changeset publish`) publishes to npm locally if you need to bypass the workflow (it creates no GitHub release and does not deploy Pages).
+
+#### Pre-releases
+
+To publish `-beta.N` prereleases before a final release, enter Changesets pre-release mode in a pull request:
+
+```bash
+pnpm changeset pre enter beta   # writes .changeset/pre.json; commit it
+```
+
+While in pre mode:
+
+- The version pull request (titled `... (beta)`) computes e.g. `1.1.0-beta.0`; once new changesets land after a release, it bumps to `-beta.1`, and so on. Final releases are blocked until you exit pre mode.
+- Merging it publishes the prerelease under the npm dist-tag `beta`, so `latest` keeps pointing at the last final release, and marks the GitHub release as a pre-release. The live site on GitHub Pages is left alone.
+- Consumed changesets are **moved** to `.changeset/pre/` instead of deleted, so the final release's changelog can aggregate them. Don't delete them by hand.
+- The `-beta.N` counter is derived from the current `package.json` version, one more reason never to hand-edit `version`; a hand-set version shifts the counter.
+
+When the release is ready to go final, exit pre mode in a pull request:
+
+```bash
+pnpm changeset pre exit         # marks pre mode as exiting in .changeset/pre.json; commit it
+```
+
+After it merges, the version pull request computes the final version (`1.1.0`) and cleans up the consumed changesets. Merging that publishes under `latest`.
 
 ## License
 
